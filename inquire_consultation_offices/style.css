@@ -1,0 +1,59 @@
+body {
+    background-color: #141310;
+    color: #e6e2dc;
+    -webkit-font-smoothing: antialiased
+}
+
+.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
+    vertical-align: middle
+}
+
+.glass-panel {
+    background: rgba(20, 19, 16, 0.6);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    border: 1px solid rgba(217, 213, 207, 0.1)
+}
+
+.input-underline {
+    border: none;
+    border-bottom: 1px solid rgba(217, 213, 207, 0.2);
+    background: transparent;
+    transition: border-color 0.5s ease
+}
+
+.input-underline:focus {
+    outline: none;
+    border-color: #eabf89;
+    box-shadow: none
+}
+
+.architectural-bg {
+    background-image: url(https://lh3.googleusercontent.com/aida/AP1WRLuMm0kPgTNeBbMX_zFIDQv--vYTqwp2X0a3smBUIzv1sSVV62ODXGuUJFE-dqdhhTuqMT7ylmakMDoyHGKwaeUFfH7tZKEr6pZ-qqwV2Ft9t72sA6IoBYXaOUvIliZ3PNVMXGMsa5h0iU5SGBFYOdkxa0WSfzh3TUYWegd16EsWSAnjZxFq_j5eetVrMr5V4HQkalbs6PPwMsX3YYxIlp_OCX1matQx5a946aMprT9lmcuAP2asGDIzpzkn);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed
+}
+
+.office-marker {
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1)
+}
+
+.office-marker:hover {
+    color: #eabf89;
+    transform: scale(1.1)
+}
+
+.reveal-anim {
+    opacity: 0;
+    transform: translatey(30px);
+    animation: reveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards
+}
+
+@keyframes reveal {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

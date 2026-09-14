@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OA Architecture | Admin Console</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Playfair+Display:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary": "#c8c6c4",
+                        "surface-bright": "#3a3935",
+                        "primary-fixed-dim": "#c9c6c5",
+                        "primary-container": "#0a0a0a",
+                        "on-primary-container": "#7b7979",
+                        "on-tertiary-fixed-variant": "#5e4116",
+                        "surface": "#141310",
+                        "on-surface-variant": "#c4c7c7",
+                        "tertiary-fixed-dim": "#eabf89",
+                        "surface-container": "#21201c",
+                        "secondary-fixed": "#e4e2df",
+                        "background": "#141310",
+                        "primary-fixed": "#e5e2e1",
+                        "tertiary-container": "#120800",
+                        "surface-container-lowest": "#0f0e0b",
+                        "surface-dim": "#141310",
+                        "inverse-primary": "#5f5e5e",
+                        "outline": "#8e9192",
+                        "surface-variant": "#363531",
+                        "on-secondary-fixed-variant": "#474745",
+                        "inverse-on-surface": "#32302c",
+                        "secondary-fixed-dim": "#c8c6c4",
+                        "on-primary": "#313030",
+                        "on-background": "#e6e2dc",
+                        "error-container": "#93000a",
+                        "tertiary-fixed": "#ffddb4",
+                        "on-primary-fixed-variant": "#474646",
+                        "error": "#ffb4ab",
+                        "on-surface": "#e6e2dc",
+                        "on-secondary-container": "#b9b8b6",
+                        "surface-container-high": "#2b2a26",
+                        "on-tertiary-container": "#967343",
+                        "on-error-container": "#ffdad6",
+                        "surface-container-low": "#1c1c18",
+                        "on-secondary-fixed": "#1b1c1a",
+                        "on-primary-fixed": "#1c1b1b",
+                        "on-secondary": "#30312f",
+                        "primary": "#c9c6c5",
+                        "surface-tint": "#c9c6c5",
+                        "inverse-surface": "#e6e2dc",
+                        "on-error": "#690005",
+                        "secondary-container": "#494947",
+                        "surface-container-highest": "#363531",
+                        "on-tertiary": "#452b02",
+                        "tertiary": "#eabf89",
+                        "on-tertiary-fixed": "#291800",
+                        "outline-variant": "#444748"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0px",
+                        "lg": "0px",
+                        "xl": "0px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "8px",
+                        "gutter": "32px",
+                        "margin-desktop": "80px",
+                        "margin-mobile": "24px",
+                        "section-gap": "160px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "display-xl": ["Playfair Display"],
+                        "headline-md": ["Playfair Display"],
+                        "body-md": ["Inter"],
+                        "display-xl-mobile": ["Playfair Display"],
+                        "headline-lg": ["Playfair Display"],
+                        "caption": ["Inter"],
+                        "headline-lg-mobile": ["Playfair Display"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.2em", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "32px", "letterSpacing": "0.01em", "fontWeight": "300"}],
+                        "display-xl": ["84px", {"lineHeight": "90px", "letterSpacing": "-0.02em", "fontWeight": "400"}],
+                        "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "display-xl-mobile": ["48px", {"lineHeight": "52px", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+                        "headline-lg": ["48px", {"lineHeight": "56px", "fontWeight": "400"}],
+                        "caption": ["13px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["32px", {"lineHeight": "38px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<link href="style.css" rel="stylesheet"/>
+</head>
+<body class="font-body-md text-body-md overflow-x-hidden">
+<!-- SideNavBar Component -->
+<aside class="h-full w-80 fixed left-0 top-0 bg-surface-container dark:bg-surface-container-lowest border-r border-outline-variant/10 flex flex-col py-12 px-6 z-50">
+<div class="mb-12">
+<h1 class="font-label-caps text-label-caps tracking-[0.2em] text-on-surface">Admin Console</h1>
+<p class="text-[10px] opacity-40 mt-1 uppercase tracking-widest">BIM Management</p>
+</div>
+<nav class="flex-grow space-y-2">
+<a class="flex items-center gap-4 px-4 py-3 bg-surface-variant text-on-surface-variant font-medium transition-all duration-300" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md text-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-on-surface/60 hover:bg-surface-container-high hover:text-on-surface transition-colors duration-300" href="#">
+<span class="material-symbols-outlined">architecture</span>
+<span class="font-body-md text-body-md">BIM Models</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-on-surface/60 hover:bg-surface-container-high hover:text-on-surface transition-colors duration-300" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-body-md text-body-md">Analytics</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-on-surface/60 hover:bg-surface-container-high hover:text-on-surface transition-colors duration-300" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-body-md text-body-md">Project Archive</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-on-surface/60 hover:bg-surface-container-high hover:text-on-surface transition-colors duration-300" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-md text-body-md">Settings</span>
+</a>
+</nav>
+<div class="mt-auto pt-8 border-t border-outline-variant/10">
+<button class="w-full py-4 bg-[#F7F5F2] text-[#0A0A0A] font-label-caps text-label-caps hover:bg-[#B28C5A] hover:text-white transition-all duration-500 uppercase">
+                Add New Project
+            </button>
+<div class="mt-8 flex items-center gap-4">
+<img alt="Oussama Attia Profile" class="w-10 h-10 object-cover rounded-full grayscale" data-alt="A professional portrait of a lead architect in a minimalist studio environment. The man wears a structured black turtleneck and glasses, set against a background of white architectural models and soft, diffused natural light. The mood is intellectual, high-end, and perfectly aligned with a luxury design studio aesthetic." src="https://lh3.googleusercontent.com/aida/AP1WRLuJgitO10V_o1pZn_oRZ6KTUwAXHbk2uH8izA6Rul_yKuFb-efMstAilPzwjzpkO-BihZiEK0IYR2cIOyqexKltlbhkIo9vBQY-pyaDss-zvRmEGjdl8zcq50yCLA0XV9iYnfXLLsqOYL3WbW2Jeg0rv_CsZKDNh-NCI8FoNxk6wi7d3mTLe-PWt8WA8xoHbKdve6hAwJJp0x9_ddNeLCLUN9_57rlRgd1OUZv_7F2Mcy9oiXGQCixk4UU"/>
+<div>
+<p class="font-label-caps text-[11px] text-on-surface">Oussama Attia</p>
+<p class="text-[10px] opacity-40 uppercase">Principal Architect</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-80 min-h-screen p-margin-desktop">
+<!-- Header / Welcome Section -->
+<header class="flex justify-between items-end mb-section-gap">
+<div class="max-w-2xl">
+<h2 class="font-headline-lg text-headline-lg mb-4">Practice Analytics</h2>
+<p class="font-body-lg text-body-lg text-on-surface/60">Overview of global project performance, BIM integration health, and strategic client inquiries across all active studios.</p>
+</div>
+<div class="flex items-center gap-6">
+<div class="text-right">
+<p class="font-label-caps text-label-caps text-on-surface/40">Status</p>
+<p class="font-label-caps text-label-caps text-tertiary">Operational</p>
+</div>
+<div class="w-px h-8 bg-outline-variant/20"></div>
+<div class="text-right">
+<p class="font-label-caps text-label-caps text-on-surface/40">Active Nodes</p>
+<p class="font-label-caps text-label-caps">14 Studios</p>
+</div>
+</div>
+</header>
+<!-- KPI Grid -->
+<section class="grid grid-cols-12 gap-gutter mb-section-gap">
+<div class="col-span-4 architectural-border p-8 bg-surface-container-low flex flex-col justify-between h-64">
+<div class="flex justify-between items-start">
+<span class="font-label-caps text-[10px] tracking-widest text-on-surface/40 uppercase">Project Health</span>
+<span class="material-symbols-outlined text-tertiary">show_chart</span>
+</div>
+<div>
+<h3 class="text-5xl font-light tracking-tighter">94.2%</h3>
+<p class="font-label-caps text-[11px] text-on-surface/60 mt-2">+2.4% from last quarter</p>
+</div>
+</div>
+<div class="col-span-4 architectural-border p-8 bg-surface-container-low flex flex-col justify-between h-64">
+<div class="flex justify-between items-start">
+<span class="font-label-caps text-[10px] tracking-widest text-on-surface/40 uppercase">Inquiries</span>
+<span class="material-symbols-outlined">mail</span>
+</div>
+<div>
+<h3 class="text-5xl font-light tracking-tighter">28</h3>
+<p class="font-label-caps text-[11px] text-on-surface/60 mt-2">12 Qualified prospects</p>
+</div>
+</div>
+<div class="col-span-4 architectural-border p-8 bg-surface-container-low flex flex-col justify-between h-64">
+<div class="flex justify-between items-start">
+<span class="font-label-caps text-[10px] tracking-widest text-on-surface/40 uppercase">BIM Sync</span>
+<span class="material-symbols-outlined">cloud_sync</span>
+</div>
+<div>
+<h3 class="text-5xl font-light tracking-tighter">Active</h3>
+<p class="font-label-caps text-[11px] text-on-surface/60 mt-2">All 18 models synchronized</p>
+</div>
+</div>
+</section>
+<!-- Project Management & Data Visualization -->
+<div class="grid grid-cols-12 gap-gutter mb-section-gap">
+<!-- Project Management Table (8 columns) -->
+<div class="col-span-8">
+<div class="flex justify-between items-center mb-8">
+<h4 class="font-label-caps text-label-caps tracking-widest uppercase">Active Workflows</h4>
+<div class="flex gap-4">
+<button class="px-4 py-2 architectural-border text-[11px] font-label-caps hover:bg-surface-variant transition-colors">EXPORT CSV</button>
+<button class="px-4 py-2 architectural-border text-[11px] font-label-caps hover:bg-surface-variant transition-colors">FILTER</button>
+</div>
+</div>
+<div class="w-full overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="border-b border-outline-variant/20">
+<th class="pb-4 font-label-caps text-[10px] text-on-surface/40 uppercase tracking-widest">Project ID</th>
+<th class="pb-4 font-label-caps text-[10px] text-on-surface/40 uppercase tracking-widest">Location</th>
+<th class="pb-4 font-label-caps text-[10px] text-on-surface/40 uppercase tracking-widest">BIM Status</th>
+<th class="pb-4 font-label-caps text-[10px] text-on-surface/40 uppercase tracking-widest text-right">Progress</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<tr class="group hover:bg-surface-container-high transition-colors cursor-pointer">
+<td class="py-6">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-surface-variant flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover grayscale opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700" data-alt="A dramatic architectural visualization of a brutalist concrete villa set against a moody, overcast sky. The lighting is low-key and sharp, highlighting the raw texture of the concrete. The perspective is from a low angle, emphasizing the monumental scale and geometric precision of the design." src="https://lh3.googleusercontent.com/aida/AP1WRLs6j6vfsDQSCgEn5UZEIBZjiiU5gktr6keu_GbkgMfcY7b0HtJRxPkthacOhM7n9hi96sH86S0pKlniFqdBBm27XGJ0jTUHe4rY1-fTSCwaKVqqlkIwY2cNSRDRabhTKybjCa4ldsH9aufYjynNGGNNzF_Y-Wwt0ZGtoxHlVR19mWibSTWlkDdP_A2nzWN6j4sVSI-IU81tz0pIyg73hqw86VxH6E_4GbUT53xwJhUA_tvj29Dvk-m_1vww"/>
+</div>
+<div>
+<p class="font-medium text-sm">OA-204: Obsidian House</p>
+<p class="text-[10px] text-on-surface/40">Residential • High-End</p>
+</div>
+</div>
+</td>
+<td class="py-6">
+<p class="text-sm">Zurich, CH</p>
+</td>
+<td class="py-6">
+<div class="flex items-center gap-2">
+<div class="w-1.5 h-1.5 bg-tertiary rounded-full"></div>
+<p class="text-[11px] font-label-caps">LOD 400</p>
+</div>
+</td>
+<td class="py-6 text-right">
+<p class="text-sm font-label-caps">82%</p>
+<div class="w-24 h-[1px] bg-outline-variant/20 ml-auto mt-2 overflow-hidden">
+<div class="h-full bg-tertiary w-[82%]"></div>
+</div>
+</td>
+</tr>
+<tr class="group hover:bg-surface-container-high transition-colors cursor-pointer">
+<td class="py-6">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-surface-variant flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover grayscale opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700" data-alt="A minimalist architectural interior featuring a staircase made of white stone and glass. The light enters through a narrow skylight, creating sharp shadows and highlighting the clean, vertical lines of the space. The palette is dominated by off-whites and soft grays, evoking a sense of calm and luxury." src="https://lh3.googleusercontent.com/aida/AP1WRLsuNrzbdvWIMGzrn1BlqJfFXRdD__q8xOIIz5FR7JfE8QOPDqpOyzHYczwBnGRS6bIr4dwcDEeMGzt80o74HQNCeJM61r8Do1eoM_0MoFvGRSNZJYipIRPLN08YheLGvPvw6iPwrp652GYX_INT7Q2aWe1jhi6RojYwMbjS3i3CD-6Mbw4gm9DF6HX0EW-I1vzas9q_OSVnZdcO_y0FWd1PPnqJVHDYpcuzrRMWRXldhn9V4JrskvsHB7Cb"/>
+</div>
+<div>
+<p class="font-medium text-sm">OA-312: Pavilion Noir</p>
+<p class="text-[10px] text-on-surface/40">Culture • Gallery</p>
+</div>
+</div>
+</td>
+<td class="py-6">
+<p class="text-sm">Kyoto, JP</p>
+</td>
+<td class="py-6">
+<div class="flex items-center gap-2">
+<div class="w-1.5 h-1.5 bg-outline rounded-full"></div>
+<p class="text-[11px] font-label-caps text-on-surface/60">LOD 300</p>
+</div>
+</td>
+<td class="py-6 text-right">
+<p class="text-sm font-label-caps">45%</p>
+<div class="w-24 h-[1px] bg-outline-variant/20 ml-auto mt-2 overflow-hidden">
+<div class="h-full bg-on-surface/40 w-[45%]"></div>
+</div>
+</td>
+</tr>
+<tr class="group hover:bg-surface-container-high transition-colors cursor-pointer">
+<td class="py-6">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-surface-variant flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover grayscale opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700" data-alt="An exterior shot of a modern glass skyscraper reflecting a clear blue sky. The building features intricate steel framing and a sharp, angular silhouette. The photography is high-contrast, black and white, emphasizing the structural patterns and the interplay of light and shadow on the glass surfaces." src="https://lh3.googleusercontent.com/aida/AP1WRLtoK3CJ6mDt9DcxF4p--ywqtXaGRoxK6stK0Wj-ohinfA01DId2--CHAQDXGvHZoJtXDGnXdq_wqG12XisKcKuaCD2SeEJ7SHbvDC4jglKfiH2IOd-LSjJxgPejVgpJjiIjarCS6ZVy3N5VpcDhejJ_0D8_nBQTKcJe6RNAd-VGlLl79XEk8AxYJTf9xt9Y1OajDd6TELVkKQziusQbCABVufGfr8s4WX6RMD24QMwHHbweEPK9nrJc6mHE"/>
+</div>
+<div>
+<p class="font-medium text-sm">OA-198: Helix Tower</p>
+<p class="text-[10px] text-on-surface/40">Commercial • HQ</p>
+</div>
+</div>
+</td>
+<td class="py-6">
+<p class="text-sm">Dubai, UAE</p>
+</td>
+<td class="py-6">
+<div class="flex items-center gap-2">
+<div class="w-1.5 h-1.5 bg-tertiary rounded-full"></div>
+<p class="text-[11px] font-label-caps">LOD 500</p>
+</div>
+</td>
+<td class="py-6 text-right">
+<p class="text-sm font-label-caps">98%</p>
+<div class="w-24 h-[1px] bg-outline-variant/20 ml-auto mt-2 overflow-hidden">
+<div class="h-full bg-tertiary w-[98%]"></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Side Cards / Team & Uploads (4 columns) -->
+<div class="col-span-4 space-y-gutter">
+<div class="architectural-border p-8 bg-surface-container-low">
+<h4 class="font-label-caps text-label-caps tracking-widest uppercase mb-6">Recent Uploads</h4>
+<div class="space-y-4">
+<div class="flex items-center justify-between p-4 bg-surface-container-high architectural-border group cursor-pointer">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-tertiary">picture_as_pdf</span>
+<div>
+<p class="text-[11px] font-medium">Render_V04_Final.pdf</p>
+<p class="text-[9px] text-on-surface/40 uppercase">Obsidian House • 12MB</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface/20 group-hover:text-on-surface transition-colors">download</span>
+</div>
+<div class="flex items-center justify-between p-4 bg-surface-container-high architectural-border group cursor-pointer">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-tertiary">inventory</span>
+<div>
+<p class="text-[11px] font-medium">BIM_Structural_RVT.zip</p>
+<p class="text-[9px] text-on-surface/40 uppercase">Helix Tower • 1.4GB</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface/20 group-hover:text-on-surface transition-colors">download</span>
+</div>
+</div>
+</div>
+<div class="architectural-border p-8 bg-surface-container-low">
+<h4 class="font-label-caps text-label-caps tracking-widest uppercase mb-6">Studio Assignment</h4>
+<div class="space-y-6">
+<div class="flex items-center gap-4">
+<img class="w-10 h-10 object-cover grayscale rounded-none" data-alt="A focused female architect with dark hair working on a large digital drafting tablet. The background is a modern architectural office with industrial lighting and large windows. She wears a minimalist grey blazer, and the overall color palette is muted and professional." src="https://lh3.googleusercontent.com/aida/AP1WRLuk6E3fW4SKWlfaXdL3fo_OnzzeeGjFQd8ftNtDfBYbBszV-DQ21R0T5muGWLhoyM71FNdV53d5QD6hupoNrdMki-Ww5xPS5b5obTOjah9pkADKXuoESk2j3d_-Tjbr06Bkz2l1-9TEdJg3UPl2-BWmbta7VVwbjv28rJ837occDnc5UnhZUR-EpiNHqW_Tu4vBS-Jph0hLLmTAbjd5ItX6TEl7_acxdDQiLYBLyTMaX4M3hkqWUEFns201"/>
+<div class="flex-grow">
+<p class="text-xs font-medium">Elena Rossi</p>
+<p class="text-[10px] text-on-surface/40 uppercase">Design Lead • Pavilion Noir</p>
+</div>
+<div class="w-2 h-2 bg-error rounded-full"></div>
+</div>
+<div class="flex items-center gap-4">
+<img class="w-10 h-10 object-cover grayscale rounded-none" data-alt="A portrait of a male landscape architect in a modern, plant-filled design studio. He wears a dark linen shirt, and the lighting is soft and natural, emphasizing a high-end, organic design philosophy. The mood is calm and professional." src="https://lh3.googleusercontent.com/aida/AP1WRLvHIEbzlzwSeuWioYwczgt8aUMCzwjyqdmdUxScLSdWVgHCBuy9MdyWDScB8d4nGvIwkFomIctbQ1rLY8gXgy4m865HzIwGl6kEncR7oCOtXwITyFKGNS-LMFvX38lspANT10wwwPSYbHrVLuKdzNnLyRh_cb5XWxgW2lQjVM30kIAK_a6acffe0IC5cPooceDfvKHgH2vedsuOG0ugqxvR7vsFFaCE53xd06qMd_SLSbxhBvo45dYfFK4"/>
+<div class="flex-grow">
+<p class="text-xs font-medium">Julian Voss</p>
+<p class="text-[10px] text-on-surface/40 uppercase">BIM Coordinator • Obsidian</p>
+</div>
+<div class="w-2 h-2 bg-tertiary rounded-full"></div>
+</div>
+<button class="w-full py-3 border border-outline-variant/20 font-label-caps text-[10px] hover:border-tertiary transition-all">MANAGE TEAM</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Section -->
+<footer class="w-full py-section-gap border-t border-outline-variant/20 flex flex-col gap-unit items-start max-w-12-column mx-auto">
+<h2 class="font-display-xl text-display-xl tracking-tighter opacity-10 uppercase select-none pointer-events-none">OA Architecture</h2>
+<div class="w-full flex justify-between items-end mt-12">
+<div class="flex flex-col gap-4">
+<p class="font-label-caps text-label-caps text-on-surface/40">© 2024 OA ARCHITECTURE &amp; DESIGN. ALL RIGHTS RESERVED.</p>
+<div class="flex gap-8">
+<a class="font-label-caps text-label-caps text-on-surface/40 hover:text-tertiary transition-colors duration-500 uppercase" href="#">Privacy Policy</a>
+<a class="font-label-caps text-label-caps text-on-surface/40 hover:text-tertiary transition-colors duration-500 uppercase" href="#">Legal Notice</a>
+</div>
+</div>
+<div class="flex gap-8">
+<a class="font-label-caps text-label-caps text-on-surface/40 hover:text-tertiary transition-colors duration-500 uppercase" href="#">Instagram</a>
+<a class="font-label-caps text-label-caps text-on-surface/40 hover:text-tertiary transition-colors duration-500 uppercase" href="#">LinkedIn</a>
+</div>
+</div>
+</footer>
+</main>
+<!-- Contextual FAB (Hidden on management screens by default, but included for Dashboard context) -->
+<button class="fixed bottom-12 right-12 w-16 h-16 bg-[#F7F5F2] text-[#0A0A0A] flex items-center justify-center hover:bg-[#B28C5A] hover:text-white transition-all duration-500 z-50 group">
+<span class="material-symbols-outlined text-2xl group-hover:rotate-90 transition-transform duration-500">add</span>
+</button>
+<script>
+        // Micro-interaction for hover states and atmospheric effects
+        document.querySelectorAll('.architectural-border').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.borderColor = 'rgba(178, 140, 90, 0.4)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.borderColor = 'rgba(217, 213, 207, 0.1)';
+            });
+        });
+
+        // Simple animation on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 1.5s ease-out';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body></html>

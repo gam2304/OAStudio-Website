@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Projects Gallery | OA Architecture</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <link href="style.css" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary": "#c8c6c4",
+                        "surface-bright": "#3a3935",
+                        "primary-fixed-dim": "#c9c6c5",
+                        "primary-container": "#0a0a0a",
+                        "on-primary-container": "#7b7979",
+                        "on-tertiary-fixed-variant": "#5e4116",
+                        "surface": "#141310",
+                        "on-surface-variant": "#c4c7c7",
+                        "tertiary-fixed-dim": "#eabf89",
+                        "surface-container": "#21201c",
+                        "secondary-fixed": "#e4e2df",
+                        "background": "#141310",
+                        "primary-fixed": "#e5e2e1",
+                        "tertiary-container": "#120800",
+                        "surface-container-lowest": "#0f0e0b",
+                        "surface-dim": "#141310",
+                        "inverse-primary": "#5f5e5e",
+                        "outline": "#8e9192",
+                        "surface-variant": "#363531",
+                        "on-secondary-fixed-variant": "#474745",
+                        "inverse-on-surface": "#32302c",
+                        "secondary-fixed-dim": "#c8c6c4",
+                        "on-primary": "#313030",
+                        "on-background": "#e6e2dc",
+                        "error-container": "#93000a",
+                        "tertiary-fixed": "#ffddb4",
+                        "on-primary-fixed-variant": "#474646",
+                        "error": "#ffb4ab",
+                        "on-surface": "#e6e2dc",
+                        "on-secondary-container": "#b9b8b6",
+                        "surface-container-high": "#2b2a26",
+                        "on-tertiary-container": "#967343",
+                        "on-error-container": "#ffdad6",
+                        "surface-container-low": "#1c1c18",
+                        "on-secondary-fixed": "#1b1c1a",
+                        "on-primary-fixed": "#1c1b1b",
+                        "on-secondary": "#30312f",
+                        "primary": "#c9c6c5",
+                        "surface-tint": "#c9c6c5",
+                        "inverse-surface": "#e6e2dc",
+                        "on-error": "#690005",
+                        "secondary-container": "#494947",
+                        "surface-container-highest": "#363531",
+                        "on-tertiary": "#452b02",
+                        "tertiary": "#eabf89",
+                        "on-tertiary-fixed": "#291800",
+                        "outline-variant": "#444748"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0px",
+                        "lg": "0px",
+                        "xl": "0px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "8px",
+                        "gutter": "32px",
+                        "margin-desktop": "80px",
+                        "margin-mobile": "24px",
+                        "section-gap": "160px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "display-xl": ["Playfair Display"],
+                        "headline-md": ["Playfair Display"],
+                        "body-md": ["Inter"],
+                        "display-xl-mobile": ["Playfair Display"],
+                        "headline-lg": ["Playfair Display"],
+                        "caption": ["Inter"],
+                        "headline-lg-mobile": ["Playfair Display"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.2em", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "32px", "letterSpacing": "0.01em", "fontWeight": "300" }],
+                        "display-xl": ["84px", { "lineHeight": "90px", "letterSpacing": "-0.02em", "fontWeight": "400" }],
+                        "headline-md": ["32px", { "lineHeight": "40px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "display-xl-mobile": ["48px", { "lineHeight": "52px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+                        "headline-lg": ["48px", { "lineHeight": "56px", "fontWeight": "400" }],
+                        "caption": ["13px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "38px", "fontWeight": "400" }]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+
+<body class="font-body-md text-on-background">
+    <!-- Top Navigation Bar -->
+    <nav
+        class="fixed top-0 w-full z-50 bg-transparent dark:bg-transparent flex justify-between items-center px-margin-desktop py-8 w-full">
+        <div class="font-headline-md text-headline-md font-bold text-on-surface dark:text-on-surface tracking-tighter">
+            OA Architecture
+        </div>
+        <div class="hidden md:flex gap-10 items-center">
+            <a class="font-label-caps text-label-caps text-primary dark:text-tertiary font-semibold border-b border-primary/20 transition-all duration-700 ease-out hover:text-tertiary"
+                href="#">Projects</a>
+            <a class="font-label-caps text-label-caps text-on-surface/70 dark:text-on-surface/70 hover:text-on-surface transition-all duration-700 ease-out hover:text-tertiary"
+                href="#">About</a>
+            <a class="font-label-caps text-label-caps text-on-surface/70 dark:text-on-surface/70 hover:text-on-surface transition-all duration-700 ease-out hover:text-tertiary"
+                href="#">Practice</a>
+            <a class="font-label-caps text-label-caps text-on-surface/70 dark:text-on-surface/70 hover:text-on-surface transition-all duration-700 ease-out hover:text-tertiary"
+                href="#">Journal</a>
+        </div>
+        <button
+            class="bg-primary-fixed text-on-primary px-8 py-3 font-label-caps text-label-caps hover:bg-tertiary transition-colors duration-500">
+            Consultation
+        </button>
+    </nav>
+    <!-- Main Content Canvas -->
+    <main class="pt-40 pb-section-gap px-margin-desktop max-w-[1440px] mx-auto">
+        <!-- Header Section -->
+        <header class="mb-24 flex flex-col md:flex-row justify-between items-end gap-12">
+            <div class="max-w-2xl">
+                <h1 class="font-display-xl text-display-xl mb-6">Archive of Form.</h1>
+                <p class="font-body-lg text-body-lg text-on-surface/60">A curated collection of spatial experiences,
+                    defined by the dialogue between silence, light, and material precision.</p>
+            </div>
+            <!-- Category Filtering -->
+            <div class="flex flex-wrap gap-x-8 gap-y-4 justify-start md:justify-end pb-2">
+                <button class="font-label-caps text-label-caps border-b-2 border-tertiary text-tertiary pb-1">All
+                    Projects</button>
+                <button
+                    class="font-label-caps text-label-caps border-b-2 border-transparent text-on-surface/40 hover:text-on-surface hover:border-on-surface/20 pb-1 transition-all duration-300">Residential</button>
+                <button
+                    class="font-label-caps text-label-caps border-b-2 border-transparent text-on-surface/40 hover:text-on-surface hover:border-on-surface/20 pb-1 transition-all duration-300">Commercial</button>
+                <button
+                    class="font-label-caps text-label-caps border-b-2 border-transparent text-on-surface/40 hover:text-on-surface hover:border-on-surface/20 pb-1 transition-all duration-300">Luxury
+                    Villas</button>
+                <button
+                    class="font-label-caps text-label-caps border-b-2 border-transparent text-on-surface/40 hover:text-on-surface hover:border-on-surface/20 pb-1 transition-all duration-300">Mixed-use</button>
+                <button
+                    class="font-label-caps text-label-caps border-b-2 border-transparent text-on-surface/40 hover:text-on-surface hover:border-on-surface/20 pb-1 transition-all duration-300">International</button>
+            </div>
+        </header>
+        <!-- Project Masonry Grid -->
+        <div class="masonry-grid" id="projects-grid">
+            <!-- Project Card 1: Large Vertical -->
+            <div
+                class="masonry-item project-card relative overflow-hidden bg-surface-container-lowest group cursor-pointer">
+                <img class="w-full aspect-[3/4] object-cover grayscale hover:grayscale-0 transition-all duration-1000 ease-out"
+                    data-alt="A monolithic luxury villa constructed from raw, textured concrete and warm cedar wood, standing against a twilight sky. The architecture features sharp horizontal planes and floor-to-ceiling glass walls that reflect the surrounding minimalist landscape. Soft interior lighting spills out, highlighting the clean structural lines in a sophisticated dark-mode aesthetic with warm white glows."
+                    src="https://lh3.googleusercontent.com/aida/AP1WRLvCFqNQFw9zGRx7oY6C1rojHMmMwAzYq3kTqratOgxzByDHRe5feL1fFr6xl5QTjznRmYGgLzhykxcBMz-15ldJJPNY6USZTPEWo1jW0tNJ5wjOoXIwkXx7ds20piCCH8EZgskakrodn4-GJgYU3bpuUTmleVoBD6-Zi0lDxPo9gmGS3pDPRxW0b_5ZJ_9LaX9d--G9Y7pTn4cehiTGuqiOhhD0-KWW0I0o1-gpj_UiW0FY5YgWNZ5CrMU_">
+                <div
+                    class="overlay absolute inset-0 bg-surface/90 opacity-0 transition-opacity duration-700 flex flex-col justify-center items-center text-center p-12">
+                    <span class="font-label-caps text-label-caps text-tertiary mb-4">Residential</span>
+                    <h3 class="font-headline-md text-headline-md mb-2">The Monolith House</h3>
+                    <p class="font-body-md text-body-md text-on-surface/60">Oslo, Norway • 2023</p>
+                    <div class="mt-8 border-t border-outline-variant/30 pt-8 w-24">
+                        <span class="material-symbols-outlined text-tertiary">arrow_forward</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Project Card 2: Square -->
+            <div
+                class="masonry-item project-card relative overflow-hidden bg-surface-container-lowest group cursor-pointer">
+                <img class="w-full aspect-square object-cover grayscale hover:grayscale-0 transition-all duration-1000 ease-out"
+                    data-alt="An expansive modern atrium within a commercial complex, featuring dramatic limestone columns and an intricate geometric glass ceiling. The space is captured in high-contrast black and white photography, emphasizing the interplay of light and shadow on stone surfaces. The mood is silent and monumental, mirroring high-end editorial architectural photography for OA Architecture."
+                    src="https://lh3.googleusercontent.com/aida/AP1WRLsfdqSUtXavOXGdcgxDsVY98808wFCH92vdkq2bRuXXGcuneEz_qgsp_4yprNdelWZKjVIGE0e6JeUVNlFiMxdon2f_Cw0iFDN-xomiOpi4BelGUM4sgaxaT8gSyi1eEnotYdjlDboBGbFjkRdMM5Gp-aXHqnj5q0VmrSB8PROYDR7z2kHPwEuAL-SOxz2d2vm2mRRviLPNy1fGmt6u5bdye_41gi9VAYiqV8fyN83ChwGaSjiHBqjUrVx9">
+                <div
+                    class="overlay absolute inset-0 bg-surface/90 opacity-0 transition-opacity duration-700 flex flex-col justify-center items-center text-center p-12">
+                    <span class="font-label-caps text-label-caps text-tertiary mb-4">Commercial</span>
+                    <h3 class="font-headline-md text-headline-md mb-2">Nexus Hub</h3>
+                    <p class="font-body-md text-body-md text-on-surface/60">Berlin, Germany • 2022</p>
+                    <div class="mt-8 border-t border-outline-variant/30 pt-8 w-24">
+                        <span class="material-symbols-outlined text-tertiary">arrow_forward</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Project Card 3: Horizontal -->
+            <div
+                class="masonry-item project-card relative overflow-hidden bg-surface-container-lowest group cursor-pointer">
+                <img class="w-full aspect-[16/9] object-cover grayscale hover:grayscale-0 transition-all duration-1000 ease-out"
+                    data-alt="A striking minimalist skyscraper facade at dawn, composed of dark steel and charcoal-tinted glass. The building's sharp vertical edges cut into a soft, hazy morning sky, while a single bronze-lit floor provides a warm visual anchor. The image conveys a sense of high-end corporate luxury and architectural precision in a dark, moody color palette."
+                    src="https://lh3.googleusercontent.com/aida/AP1WRLsndHtKlhOTtSqhZxPPosCXl2CRYELkuSAf0zH8s46SDWZHhEEDwYILWpaE0v1evLV5aGm4PYPz1f-aOkXu4XboAi3XbZyh5HW020e1hb0P34kHHFs2ojrIq4fwe6PAzw_xHNNtGHHqD5MGakqzBwMy1ZHIv42pp2e6p8W49aDhALEwezyQxdmRL-d_THNWkWpzCclwA0OR4cNcPGGYEcNNnGp9STNVSAyG11NFT0ZxVqxkAq_CH4LgpV2B">
+                <div
+                    class="overlay absolute inset-0 bg-surface/90 opacity-0 transition-opacity duration-700 flex flex-col justify-center items-center text-center p-12">
+                    <span class="font-label-caps text-label-caps text-tertiary mb-4">Mixed-use</span>
+                    <h3 class="font-headline-md text-headline-md mb-2">Iron &amp; Glass Tower</h3>
+                    <p class="font-body-md text-body-md text-on-surface/60">Chicago, USA • 2024</p>
+                    <div class="mt-8 border-t border-outline-variant/30 pt-8 w-24">
+                        <span class="material-symbols-outlined text-tertiary">arrow_forward</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Project Card 4: Standard vertical -->
+            <div
+                class="masonry-item project-card relative overflow-hidden bg-surface-container-lowest group cursor-pointer">
+                <img class="w-full aspect-[4/5] object-cover grayscale hover:grayscale-0 transition-all duration-1000 ease-out"
+                    data-alt="A secluded luxury villa overlooking a desert valley, built from local sandstone and featuring a series of cascading outdoor terraces. The scene is illuminated by the golden hour sun, creating long shadows and highlighting the rich textures of the stone. The design philosophy is one of architectural silence and harmony with the natural desert environment, using a warm monochromatic palette."
+                    src="https://lh3.googleusercontent.com/aida/AP1WRLtTJ9mMSaQCjwb5bJnlujul5q7KXohTcWtHPwPaTuNojBSE1Wxz7LkNAQIzZTsyav6E-PusHKC4oz-gHRwtcJ8qH-qMz9UBKHAt7BXRrlaH4IFnW8rkAp6a8FXg6DJ1UM_zp0IMMzD1w6wpa9QHSAJP1rYsGr8eVKOr88xunc3L_NiplTd92gYCxx0SqQoxRMHa3dcmfksYzhkD0OdPCULCZPZJEPZulBb1MToC5As3m4KbL6h79p5EyF6a">
+                <div
+                    class="overlay absolute inset-0 bg-surface/90 opacity-0 transition-opacity duration-700 flex flex-col justify-center items-center text-center p-12">
+                    <span class="font-label-caps text-label-caps text-tertiary mb-4">Luxury Villas</span>
+                    <h3 class="font-headline-md text-headline-md mb-2">Desert Sanctuary</h3>
+                    <p class="font-body-md text-body-md text-on-surface/60">Dubai, UAE • 2023</p>
+                    <div class="mt-8 border-t border-outline-variant/30 pt-8 w-24">
+                        <span class="material-symbols-outlined text-tertiary">arrow_forward</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Project Card 5: Medium Vertical -->
+            <div
+                class="masonry-item project-card relative overflow-hidden bg-surface-container-lowest group cursor-pointer">
+                <img class="w-full aspect-[3/4] object-cover grayscale hover:grayscale-0 transition-all duration-1000 ease-out"
+                    data-alt="A modern interior space featuring a grand floating staircase made of black steel and white marble. The room is exceptionally vast with 20-foot tall windows looking out onto a dark rainy city. The interior design is starkly minimalist, with a focus on monumental volume and textural contrast between smooth stone and industrial metal. Lighting is recessed and sculptural."
+                    src="https://lh3.googleusercontent.com/aida/AP1WRLv_PuanzTFZLw3y5nEw7wwsnYsbJqMs-lGUNzDWQy024093flxE0PeFcCx5nJynJJZ6x3LsVbPyoeGU_9f5C4M1VCpKSD9_cFg0fV0VfuvsYVxdtitjNMVVOovKVDoYHULxVTOOlFXmTzKDOXTNqbxQZPesClxnCrdUYRxBY6xcZWir40uZXrDvSd26UM_e4OKKUWrCBQHOxX8ubk1Oj74QEr3IzgmFurUF4OcRF0--4ZVRJamuveO1g_a-">
+                <div
+                    class="overlay absolute inset-0 bg-surface/90 opacity-0 transition-opacity duration-700 flex flex-col justify-center items-center text-center p-12">
+                    <span class="font-label-caps text-label-caps text-tertiary mb-4">International</span>
+                    <h3 class="font-headline-md text-headline-md mb-2">Ethereal Loft</h3>
+                    <p class="font-body-md text-body-md text-on-surface/60">Tokyo, Japan • 2021</p>
+                    <div class="mt-8 border-t border-outline-variant/30 pt-8 w-24">
+                        <span class="material-symbols-outlined text-tertiary">arrow_forward</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Project Card 6: Horizontal wide -->
+            <div
+                class="masonry-item project-card relative overflow-hidden bg-surface-container-lowest group cursor-pointer">
+                <img class="w-full aspect-[16/10] object-cover grayscale hover:grayscale-0 transition-all duration-1000 ease-out"
+                    data-alt="A sleek corporate headquarters situated in a forest clearing, designed with dark charcoal metal fins that wrap the entire building structure. The architectural rhythm of the vertical fins creates a dynamic pattern against the organic shapes of the surrounding pines. The lighting is cold and atmospheric, with the building appearing as a dark monolith emerging from the woods."
+                    src="https://lh3.googleusercontent.com/aida/AP1WRLuDqvAfWfwPp6J7OTYyx3ucrhiYr0YeHn0DM2Ptu0MjxhMF5zG56Tf5yvUneWGhkfBjm6t0quQbHPf-RWgy0MPtgCbI_JitpmsvYmGKj2fXRFllGfpYL2Ctp__99U4tq0t82fAdG4H9Rs9sTX2ijvqe8OrSRfvxGjtxwNNey42dCIcGxsUynNWxTqEdRv8_qUuqukoT_18KmgfxgXR4cmPxjfRmrZdmk9jLCOeoJFEAsbP7Ejr3BbghFjQa">
+                <div
+                    class="overlay absolute inset-0 bg-surface/90 opacity-0 transition-opacity duration-700 flex flex-col justify-center items-center text-center p-12">
+                    <span class="font-label-caps text-label-caps text-tertiary mb-4">Commercial</span>
+                    <h3 class="font-headline-md text-headline-md mb-2">Pine Corporate HQ</h3>
+                    <p class="font-body-md text-body-md text-on-surface/60">Helsinki, Finland • 2022</p>
+                    <div class="mt-8 border-t border-outline-variant/30 pt-8 w-24">
+                        <span class="material-symbols-outlined text-tertiary">arrow_forward</span>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="masonry-item project-card relative overflow-hidden bg-surface-container-lowest group cursor-pointer">
+                <img class="w-full aspect-[4/5] object-cover grayscale hover:grayscale-0 transition-all duration-1000 ease-out"
+                    alt="Modern cultural center architecture, sweeping curves, white concrete, reflection pool, architectural minimalism, daylight."
+                    src="https://lh3.googleusercontent.com/aida/AP1WRLvmvnPdh0e3rCNYu1i66lgRlqTBrNU914cAOWlgwqF50kURxSmH65A3LTli8EGJi621DIe5lcdbv-YB__e8m3Uj6DkCfrOS_ypm8Fo9dIdZdNb7Ij95XeBVdQjfeT04FW6y_YJP1P7Co1Ob-QN0ZG4sjo_tocy9UiojZCq4PilM23u9a5kxBYM-tI6mNDue4GE3eIrBs3lJWdGlAq714A3XCEotMhJ6sW5UPrcGFLw0sTKtR8eerbqB_wA">
+                <div
+                    class="overlay absolute inset-0 bg-surface/90 opacity-0 transition-opacity duration-700 flex flex-col justify-center items-center text-center p-12">
+                    <span class="font-label-caps text-label-caps text-tertiary mb-4">International</span>
+                    <h3 class="font-headline-md text-headline-md mb-2">The Fluid Pavilion</h3>
+                    <p class="font-body-md text-body-md text-on-surface/60">Valencia, Spain • 2024</p>
+                    <div class="mt-8 border-t border-outline-variant/30 pt-8 w-24">
+                        <span class="material-symbols-outlined text-tertiary">arrow_forward</span>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="masonry-item project-card relative overflow-hidden bg-surface-container-lowest group cursor-pointer">
+                <img class="w-full aspect-[16/10] object-cover grayscale hover:grayscale-0 transition-all duration-1000 ease-out"
+                    alt="Interior design of a minimalist luxury living space, floor-to-ceiling windows, mountain view, monolithic stone furniture, soft ambient lighting, ultra-modern architectural style."
+                    src="https://lh3.googleusercontent.com/aida/AP1WRLvlN80DWQb3IIk9mGlT5hWfpCayRth0qmL9fHcg5UxkXPKxylviA8BTSbsYAv88BbcJDIwsdNWzgZkRIqyAYanyZZsUa9BywuTEkosbrebRUFGaD8UiGGVe5-SikeOIET3oUKk6xYi2lsI9nm5qidf5cg3E8tEvdiKNrQlfBdgTzicVYZC5-OAiIw3UFn-lvGb7NXww8kCkKMoqx13SH8QoqJ3K068t3fxue_uY12X20RDS-_aPCTxwee8">
+                <div
+                    class="overlay absolute inset-0 bg-surface/90 opacity-0 transition-opacity duration-700 flex flex-col justify-center items-center text-center p-12">
+                    <span class="font-label-caps text-label-caps text-tertiary mb-4">Residential</span>
+                    <h3 class="font-headline-md text-headline-md mb-2">Horizon Living</h3>
+                    <p class="font-body-md text-body-md text-on-surface/60">Aspen, USA • 2023</p>
+                    <div class="mt-8 border-t border-outline-variant/30 pt-8 w-24">
+                        <span class="material-symbols-outlined text-tertiary">arrow_forward</span>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="masonry-item project-card relative overflow-hidden bg-surface-container-lowest group cursor-pointer">
+                <img class="w-full aspect-[3/4] object-cover grayscale hover:grayscale-0 transition-all duration-1000 ease-out"
+                    alt="Architectural detail of a vertical garden skyscraper, glass and steel facade, integrated greenery, urban sustainable luxury, dusk lighting."
+                    src="https://lh3.googleusercontent.com/aida/AP1WRLtDyviaCu0aJnorVIMmBSF7xJ33u6tZKaDktOzF-VT3Z1QvE6M5fqalGQuKgjQUo9EMqiFWRvLN1K1IaoULdHiieubdD3OHQ6u6tCqIQLnDJSOGxUter_0wPhh9qfSw4DQQbM-QG18UtybCFX0hEKid-SDHDboKOYxv30psCktXy84r41b2LClsPa7idY10a9NDPz9lyomQ5xkvRNQugTRBKBCd86ZURxyfYIQUAnQ6rJDBjK2b0lE8wl52">
+                <div
+                    class="overlay absolute inset-0 bg-surface/90 opacity-0 transition-opacity duration-700 flex flex-col justify-center items-center text-center p-12">
+                    <span class="font-label-caps text-label-caps text-tertiary mb-4">Commercial</span>
+                    <h3 class="font-headline-md text-headline-md mb-2">Symmetry Tower</h3>
+                    <p class="font-body-md text-body-md text-on-surface/60">Singapore • 2024</p>
+                    <div class="mt-8 border-t border-outline-variant/30 pt-8 w-24">
+                        <span class="material-symbols-outlined text-tertiary">arrow_forward</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Infinite Scroll Indicator -->
+        <div class="flex flex-col items-center justify-center mt-32 space-y-8">
+            <div class="w-1 px-1 h-32 bg-outline-variant/20 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full bg-tertiary transition-transform duration-300"
+                    id="scroll-progress" style="height: 40px; transform: translateY(0);"></div>
+            </div>
+            <p class="font-label-caps text-label-caps text-on-surface/40 animate-pulse">Loading Archive</p>
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer
+        class="w-full py-section-gap px-margin-desktop bg-background dark:bg-surface border-t border-outline-variant/20">
+        <div class="flex flex-col gap-unit items-start w-full max-w-12-column mx-auto">
+            <div class="w-full flex flex-col md:flex-row justify-between items-start md:items-end mb-20">
+                <div class="font-display-xl text-display-xl tracking-tighter opacity-10">
+                    OA ARCHITECTURE
+                </div>
+                <div class="flex flex-col gap-4 mt-8 md:mt-0 text-right">
+                    <span class="font-label-caps text-label-caps text-tertiary">Connect with us</span>
+                    <div class="flex gap-8">
+                        <a class="font-label-caps text-label-caps text-on-surface/40 hover:text-tertiary transition-colors duration-500"
+                            href="#">Instagram</a>
+                        <a class="font-label-caps text-label-caps text-on-surface/40 hover:text-tertiary transition-colors duration-500"
+                            href="#">LinkedIn</a>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="w-full border-t border-outline-variant/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-8">
+                <p class="font-label-caps text-label-caps text-on-surface/40">© 2024 OA ARCHITECTURE &amp; DESIGN. ALL
+                    RIGHTS RESERVED.</p>
+                <div class="flex gap-12">
+                    <a class="font-label-caps text-label-caps text-on-surface/40 hover:text-tertiary transition-colors duration-500"
+                        href="#">Privacy Policy</a>
+                    <a class="font-label-caps text-label-caps text-on-surface/40 hover:text-tertiary transition-colors duration-500"
+                        href="#">Legal Notice</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Floating Filter Toggle for Mobile -->
+    <button
+        class="fixed bottom-8 right-8 bg-tertiary text-on-tertiary p-4 rounded-full shadow-2xl md:hidden z-50 flex items-center justify-center">
+        <span class="material-symbols-outlined">filter_list</span>
+    </button>
+    <script>
+        // Micro-interactions for scrolling
+        window.addEventListener('scroll', () => {
+            const scrollIndicator = document.getElementById('scroll-progress');
+            const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (window.scrollY / totalHeight) * 100;
+
+            // Map 0-100 progress to the 128px height of the bar minus the 40px thumb
+            const translateVal = (progress / 100) * (128 - 40);
+            scrollIndicator.style.transform = `translateY(${translateVal}px)`;
+        });
+
+        // Hover scale effect for cards via JS for smoother deceleration
+        const cards = document.querySelectorAll('.project-card');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                const img = card.querySelector('img');
+                img.style.transform = 'scale(1.08)';
+            });
+            card.addEventListener('mouseleave', () => {
+                const img = card.querySelector('img');
+                img.style.transform = 'scale(1)';
+            });
+        });
+
+        // Simple infinite scroll simulation
+        let loading = false;
+        window.addEventListener('scroll', () => {
+            if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500 && !loading) {
+                loading = true;
+                // Simulating load
+                setTimeout(() => {
+                    const grid = document.getElementById('projects-grid');
+                    const items = grid.querySelectorAll('.masonry-item');
+                    // Clone first two items and append
+                    for (let i = 0; i < 2; i++) {
+                        const clone = items[i].cloneNode(true);
+                        grid.appendChild(clone);
+                    }
+                    loading = false;
+                }, 1000);
+            }
+        });
+    </script>
+</body>
+
+</html>
