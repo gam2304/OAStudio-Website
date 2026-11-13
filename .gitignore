@@ -1,1 +1,10 @@
-/docker-compose.yml
+.env
+.env.*
+!.env.example
+
+node_modules/
+dist/
+target/
+.idea/
+.vscode/
+*.log
