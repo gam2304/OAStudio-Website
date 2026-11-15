@@ -27,6 +27,7 @@ public class Project {
     @Column(nullable = false, unique = true, length = 220)
     private String slug;
 
+    @Column(length = 200)
     private String location;
 
     private Integer year;
