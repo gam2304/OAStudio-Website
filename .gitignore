@@ -8,3 +8,5 @@ target/
 .idea/
 .vscode/
 *.log
+/backend/oastudio-api/keys/jwt-public.pem
+/backend/oastudio-api/keys/jwt-private.pem
