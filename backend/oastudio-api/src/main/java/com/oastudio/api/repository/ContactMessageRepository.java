@@ -1,0 +1,17 @@
+package com.oastudio.api.repository;
+
+import com.oastudio.api.entity.ContactMessage;
+import com.oastudio.api.enums.MessageStatus;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+public interface ContactMessageRepository
+        extends JpaRepository<ContactMessage, Long> {
+
+    List<ContactMessage> findByStatusOrderByCreatedAtDesc(MessageStatus status);
+
+    List<ContactMessage> findAllByOrderByCreatedAtDesc();
+
+    long countByStatus(MessageStatus status);
+}
