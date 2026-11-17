@@ -22,6 +22,9 @@ public class ProjectImage {
     @Column(name = "image_url", nullable = false, columnDefinition = "TEXT")
     private String imageUrl;
 
+    @Column(name = "public_id", length = 255)
+    private String publicId;
+
     @Column(name = "alt_text", length = 255)
     private String altText;
 

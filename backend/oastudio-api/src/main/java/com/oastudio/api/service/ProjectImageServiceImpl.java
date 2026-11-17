@@ -9,6 +9,10 @@ import com.oastudio.api.exception.ResourceNotFoundException;
 import com.oastudio.api.repository.ProjectImageRepository;
 import com.oastudio.api.repository.ProjectRepository;
 
+import java.io.IOException;
+import java.util.Map;
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
@@ -21,6 +25,7 @@ import java.util.List;
 @Transactional
 public class ProjectImageServiceImpl implements ProjectImageService {
 
+    private final CloudinaryService cloudinaryService;
     private final ProjectImageRepository projectImageRepository;
     private final ProjectRepository projectRepository;
 
@@ -78,6 +83,48 @@ public class ProjectImageServiceImpl implements ProjectImageService {
         ProjectImage image = findImageById(imageId);
 
         projectImageRepository.delete(image);
+    }
+
+    @Override
+    public ProjectImageResponse uploadProjectImage(
+            Long projectId,
+            MultipartFile file,
+            String altText,
+            Integer displayOrder) {
+
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Project not found with ID: " + projectId
+                        )
+                );
+
+        try {
+            Map uploadResult = cloudinaryService.uploadImage(file, projectId);
+
+            String imageUrl = (String) uploadResult.get("secure_url");
+            String publicId = (String) uploadResult.get("public_id");
+
+            if (imageUrl == null || publicId == null) {
+                throw new IllegalStateException(
+                        "Cloudinary did not return the expected image information"
+                );
+            }
+
+            ProjectImage image = new ProjectImage();
+            image.setImageUrl(imageUrl);
+            image.setPublicId(publicId);
+            image.setAltText(altText);
+            image.setDisplayOrder(displayOrder != null ? displayOrder : 0);
+            image.setProject(project);
+
+            ProjectImage savedImage = projectImageRepository.save(image);
+
+            return mapToResponse(savedImage);
+
+        } catch (IOException exception) {
+            throw new RuntimeException("Failed to upload image to Cloudinary", exception);
+        }
     }
 
     // HELPER METHODS

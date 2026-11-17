@@ -3,6 +3,7 @@ package com.oastudio.api.service;
 
 import com.oastudio.api.dto.request.ProjectImageRequest;
 import com.oastudio.api.dto.response.ProjectImageResponse;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -18,6 +19,13 @@ public interface ProjectImageService {
     ProjectImageResponse updateProjectImage(
             Long imageId,
             ProjectImageRequest request
+    );
+
+    ProjectImageResponse uploadProjectImage(
+            Long projectId,
+            MultipartFile file,
+            String altText,
+            Integer displayOrder
     );
 
     void deleteProjectImage(Long imageId);
