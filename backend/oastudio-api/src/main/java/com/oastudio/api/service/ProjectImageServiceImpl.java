@@ -80,10 +80,30 @@ public class ProjectImageServiceImpl implements ProjectImageService {
     @Override
     public void deleteProjectImage(Long imageId) {
 
-        ProjectImage image = findImageById(imageId);
+        ProjectImage image = projectImageRepository.findById(imageId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Project image not found with ID: " + imageId
+                        )
+                );
 
-        projectImageRepository.delete(image);
+        try {
+            // Delete from Cloudinary first
+            if (image.getPublicId() != null) {
+                cloudinaryService.deleteImage(image.getPublicId());
+            }
+
+            // Delete the database record
+            projectImageRepository.delete(image);
+
+        } catch (IOException exception) {
+            throw new RuntimeException(
+                    "Failed to delete image from Cloudinary",
+                    exception
+            );
+        }
     }
+
 
     @Override
     public ProjectImageResponse uploadProjectImage(
@@ -100,6 +120,7 @@ public class ProjectImageServiceImpl implements ProjectImageService {
                 );
 
         try {
+            // 1. Upload image to Cloudinary
             Map uploadResult = cloudinaryService.uploadImage(file, projectId);
 
             String imageUrl = (String) uploadResult.get("secure_url");
@@ -111,6 +132,7 @@ public class ProjectImageServiceImpl implements ProjectImageService {
                 );
             }
 
+            // 2. Prepare the database entity
             ProjectImage image = new ProjectImage();
             image.setImageUrl(imageUrl);
             image.setPublicId(publicId);
@@ -118,14 +140,39 @@ public class ProjectImageServiceImpl implements ProjectImageService {
             image.setDisplayOrder(displayOrder != null ? displayOrder : 0);
             image.setProject(project);
 
-            ProjectImage savedImage = projectImageRepository.save(image);
+            // 3. Save and immediately flush to PostgreSQL
+            try {
+                ProjectImage savedImage =
+                        projectImageRepository.saveAndFlush(image);
 
-            return mapToResponse(savedImage);
+                return mapToResponse(savedImage);
+
+            } catch (RuntimeException databaseException) {
+
+                // 4. Database failed: remove uploaded image from Cloudinary
+                try {
+                    cloudinaryService.deleteImage(publicId);
+
+                } catch (IOException cleanupException) {
+                    databaseException.addSuppressed(cleanupException);
+                }
+
+                throw new RuntimeException(
+                        "Failed to save image information. Cloudinary cleanup was attempted.",
+                        databaseException
+                );
+            }
 
         } catch (IOException exception) {
-            throw new RuntimeException("Failed to upload image to Cloudinary", exception);
+            throw new RuntimeException(
+                    "Failed to upload image to Cloudinary",
+                    exception
+            );
         }
     }
+
+
+
 
     // HELPER METHODS
 

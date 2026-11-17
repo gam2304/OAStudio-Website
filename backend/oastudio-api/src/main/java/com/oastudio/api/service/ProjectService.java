@@ -4,7 +4,7 @@ package com.oastudio.api.service;
 import com.oastudio.api.dto.request.ProjectRequest;
 import com.oastudio.api.dto.response.ProjectResponse;
 import com.oastudio.api.enums.ProjectStatus;
-
+import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 public interface ProjectService {
@@ -30,4 +30,9 @@ public interface ProjectService {
     List<ProjectResponse> getProjectsByCategory(Long categoryId);
 
     List<ProjectResponse> getProjectsByStatus(ProjectStatus status);
+
+    ProjectResponse uploadProjectCover(Long projectId, MultipartFile file);
+
+    void deleteProjectCover(Long projectId);
+
 }

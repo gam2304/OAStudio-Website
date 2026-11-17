@@ -17,7 +17,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.List;
+import com.oastudio.api.entity.ProjectImage;
+import com.oastudio.api.repository.ProjectImageRepository;
+import org.springframework.web.multipart.MultipartFile;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -26,6 +31,8 @@ public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectRepository projectRepository;
     private final CategoryRepository categoryRepository;
+    private final ProjectImageRepository projectImageRepository;
+    private final CloudinaryService cloudinaryService;
 
     // PUBLIC WEBSITE
 
@@ -140,9 +147,30 @@ public class ProjectServiceImpl implements ProjectService {
 
         Project project = findProjectById(id);
 
-        projectRepository.delete(project);
-    }
+        List<ProjectImage> images =
+                projectImageRepository.findByProjectIdOrderByDisplayOrderAsc(id);
 
+        try {
+            // Step 1: Delete images from Cloudinary
+            for (ProjectImage image : images) {
+                if (image.getPublicId() != null) {
+                    cloudinaryService.deleteImage(image.getPublicId());
+                }
+            }
+
+            // Step 2: Explicitly delete image records from PostgreSQL
+            projectImageRepository.deleteAllByProjectIdInBulk(id);
+
+            // Step 3: Delete the project
+            projectRepository.deleteById(id);
+
+        } catch (IOException exception) {
+            throw new RuntimeException(
+                    "Failed to delete project images from Cloudinary",
+                    exception
+            );
+        }
+    }
     @Override
     public ProjectResponse updateProjectStatus(
             Long id, ProjectStatus status) {
@@ -152,6 +180,92 @@ public class ProjectServiceImpl implements ProjectService {
         project.setStatus(status);
 
         return mapToResponse(projectRepository.save(project));
+    }
+
+    @Override
+    public ProjectResponse uploadProjectCover(Long projectId, MultipartFile file) {
+
+        Project project = findProjectById(projectId);
+
+        try {
+            // Upload the new cover first
+            Map uploadResult = cloudinaryService.uploadImage(file, projectId);
+
+            String newImageUrl = (String) uploadResult.get("secure_url");
+            String newPublicId = (String) uploadResult.get("public_id");
+
+            if (newImageUrl == null || newPublicId == null) {
+                throw new IllegalStateException(
+                        "Cloudinary did not return the expected image information"
+                );
+            }
+
+            String oldPublicId = project.getCoverPublicId();
+
+            // Update project information
+            project.setCoverImageUrl(newImageUrl);
+            project.setCoverPublicId(newPublicId);
+
+            try {
+                Project updatedProject = projectRepository.saveAndFlush(project);
+
+                // Delete old cover only after the new cover is saved
+                if (oldPublicId != null && !oldPublicId.isBlank()) {
+                    try {
+                        cloudinaryService.deleteImage(oldPublicId);
+                    } catch (IOException cleanupException) {
+                        // Keep the new cover even if old-image cleanup fails
+                        throw new RuntimeException(
+                                "New cover saved, but the previous cover could not be deleted",
+                                cleanupException
+                        );
+                    }
+                }
+
+                return mapToResponse(updatedProject);
+
+            } catch (RuntimeException databaseException) {
+
+                // Restore Cloudinary if saving the new cover fails
+                try {
+                    cloudinaryService.deleteImage(newPublicId);
+                } catch (IOException cleanupException) {
+                    databaseException.addSuppressed(cleanupException);
+                }
+
+                throw databaseException;
+            }
+
+        } catch (IOException exception) {
+            throw new RuntimeException(
+                    "Failed to upload project cover to Cloudinary",
+                    exception
+            );
+        }
+    }
+
+    @Override
+    public void deleteProjectCover(Long projectId) {
+
+        Project project = findProjectById(projectId);
+
+        String publicId = project.getCoverPublicId();
+
+        if (publicId != null && !publicId.isBlank()) {
+            try {
+                cloudinaryService.deleteImage(publicId);
+            } catch (IOException exception) {
+                throw new RuntimeException(
+                        "Failed to delete project cover from Cloudinary",
+                        exception
+                );
+            }
+        }
+
+        project.setCoverImageUrl(null);
+        project.setCoverPublicId(null);
+
+        projectRepository.save(project);
     }
 
     @Override

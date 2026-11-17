@@ -44,6 +44,9 @@ public class Project {
     @Column(name = "cover_image_url", columnDefinition = "TEXT")
     private String coverImageUrl;
 
+    @Column(name = "cover_public_id", length = 255)
+    private String coverPublicId;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private ProjectStatus status = ProjectStatus.DRAFT;

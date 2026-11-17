@@ -11,6 +11,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
 
 @RestController
@@ -87,5 +91,28 @@ public class ProjectController {
             @PathVariable ProjectStatus status) {
         return ResponseEntity.ok(
                 projectService.getProjectsByStatus(status));
+    }
+
+    @PostMapping(
+            value = "/api/admin/projects/{projectId}/cover",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE
+    )
+    public ResponseEntity<ProjectResponse> uploadProjectCover(
+            @PathVariable Long projectId,
+            @RequestPart("file") MultipartFile file) {
+
+        ProjectResponse response =
+                projectService.uploadProjectCover(projectId, file);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @DeleteMapping("/api/admin/projects/{projectId}/cover")
+    public ResponseEntity<Void> deleteProjectCover(
+            @PathVariable Long projectId) {
+
+        projectService.deleteProjectCover(projectId);
+
+        return ResponseEntity.noContent().build();
     }
 }
