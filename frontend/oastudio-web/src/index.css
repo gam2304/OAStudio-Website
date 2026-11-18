@@ -1,0 +1,65 @@
+@import 'tailwindcss';
+
+/* Tokens from DESIGN.md ("Atelier Monolith") */
+@theme {
+  --color-void: #0a0a0a;
+  --color-surface: #141310;
+  --color-surface-low: #1c1c18;
+  --color-surface-high: #2b2a26;
+  --color-ink: #e6e2dc;
+  --color-paper: #f7f5f2;
+  --color-stone: #d9d5cf;
+  --color-bronze: #b28c5a;
+  --color-gold: #eabf89;
+  --color-error: #ffb4ab;
+
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+
+  --spacing-gutter: 32px;
+  --spacing-margin: 80px;
+  --spacing-margin-mobile: 24px;
+  --spacing-section: 160px;
+
+  --ease-calm: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-surface text-ink font-sans antialiased;
+  }
+  ::selection {
+    @apply bg-bronze text-void;
+  }
+  :focus-visible {
+    @apply outline outline-1 outline-offset-4 outline-bronze;
+  }
+}
+
+@utility label-caps {
+  @apply font-sans text-xs font-semibold uppercase tracking-[0.2em];
+}
+@utility display-xl {
+  @apply font-display text-5xl leading-[1.08] tracking-[-0.01em] md:text-[84px] md:leading-[90px] md:tracking-[-0.02em];
+}
+@utility headline-lg {
+  @apply font-display text-[32px] leading-[38px] md:text-5xl md:leading-[56px];
+}
+@utility headline-md {
+  @apply font-display text-[32px] leading-10;
+}
+@utility body-lg {
+  @apply text-lg font-light leading-8 tracking-[0.01em];
+}
+@utility page-x {
+  @apply px-margin-mobile md:px-margin;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
