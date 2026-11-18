@@ -7,7 +7,7 @@ export interface Category {
   categoryName: string
   slug: string
   description: string | null
-  createdAt: string
+  createdAt: string | null
 }
 
 export interface Project {
@@ -22,8 +22,8 @@ export interface Project {
   coverImageUrl: string | null
   status: ProjectStatus
   category: Category | null
-  createdAt: string
-  updatedAt: string
+  createdAt: string | null
+  updatedAt: string | null
 }
 
 export interface ProjectImage {
@@ -31,7 +31,7 @@ export interface ProjectImage {
   imageUrl: string
   altText: string | null
   displayOrder: number
-  createdAt: string
+  createdAt: string | null
 }
 
 export interface ContactMessageRequest {
@@ -55,4 +55,42 @@ export interface AuthResponse {
   accessToken: string
   tokenType: string
   expiresIn: number
+}
+
+export type MessageStatus = 'NEW' | 'READ' | 'ARCHIVED'
+
+export interface ContactMessage {
+  id: number
+  senderName: string
+  senderEmail: string
+  subject: string | null
+  message: string
+  status: MessageStatus
+  createdAt: string | null
+}
+
+// Request bodies for the admin API (mirror com.oastudio.api.dto.request)
+export interface CategoryInput {
+  categoryName: string
+  slug: string
+  description: string | null
+}
+
+export interface ProjectInput {
+  title: string
+  slug: string
+  location: string | null
+  year: number | null
+  description: string | null
+  architecturalConcept: string | null
+  area: number | null
+  coverImageUrl: string | null
+  status: ProjectStatus
+  categoryId: number
+}
+
+export interface ProjectImageInput {
+  imageUrl: string
+  altText: string | null
+  displayOrder: number
 }

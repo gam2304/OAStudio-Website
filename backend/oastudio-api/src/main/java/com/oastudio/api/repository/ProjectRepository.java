@@ -20,6 +20,8 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 
     List<Project> findByCategoryId(Long categoryId);
 
+    long countByCategoryId(Long categoryId);
+
     List<Project> findByStatusAndCategoryId(
             ProjectStatus status,
             Long categoryId

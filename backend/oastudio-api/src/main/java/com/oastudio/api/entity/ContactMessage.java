@@ -2,6 +2,7 @@
 package com.oastudio.api.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
@@ -36,6 +37,7 @@ public class ContactMessage {
     @Column(nullable = false, length = 20)
     private MessageStatus status = MessageStatus.NEW;
 
-    @Column(name = "created_at", insertable = false, updatable = false)
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 }

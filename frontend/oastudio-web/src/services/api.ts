@@ -24,6 +24,15 @@ api.interceptors.response.use(undefined, (err) => {
   return Promise.reject(err)
 })
 
+// Per-field messages from a 400 validation response, to show next to each input
+export function fieldErrors(err: unknown): Record<string, string> {
+  if (axios.isAxiosError(err)) {
+    const messages = (err.response?.data as { messages?: Record<string, string> } | undefined)?.messages
+    if (messages) return messages
+  }
+  return {}
+}
+
 // Backend errors: { error, message } or { error, messages: { field: msg } } on validation
 export function errorMessage(err: unknown, fallback = 'Something went wrong. Please try again.'): string {
   if (axios.isAxiosError(err)) {
