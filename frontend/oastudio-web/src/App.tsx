@@ -1,6 +1,10 @@
 import { MotionConfig } from 'framer-motion'
 import { Route, Routes } from 'react-router-dom'
+import AdminLayout from './layouts/AdminLayout'
 import PublicLayout from './layouts/PublicLayout'
+import Admins from './pages/admin/Admins'
+import Login from './pages/admin/Login'
+import Overview from './pages/admin/Overview'
 import About from './pages/public/About'
 import Contact from './pages/public/Contact'
 import Home from './pages/public/Home'
@@ -13,6 +17,11 @@ export default function App() {
     // Honour the OS "reduce motion" setting for every Framer animation
     <MotionConfig reducedMotion="user">
       <Routes>
+        <Route path="atelier-control/login" element={<Login />} />
+        <Route path="atelier-control" element={<AdminLayout />}>
+          <Route index element={<Overview />} />
+          <Route path="admins" element={<Admins />} />
+        </Route>
         <Route element={<PublicLayout />}>
           <Route index element={<Home />} />
           <Route path="projects" element={<Projects />} />

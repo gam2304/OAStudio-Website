@@ -1,4 +1,3 @@
-import facade from '../../assets/images/facade.webp'
 import { Reveal } from '../../components/common/Reveal'
 import { site } from '../../content/site'
 
@@ -16,7 +15,7 @@ export default function About() {
 
       <section className="page-x mx-auto mt-section grid max-w-[1440px] items-center gap-16 md:grid-cols-12">
         <Reveal className="md:col-span-5">
-          <img src={facade} alt="Glass and steel facade with vertical gardens" loading="lazy" className="aspect-[3/4] w-full object-cover grayscale" />
+          <img src={site.images.aboutPortrait} alt="Arched stone facade of Villa Oikos framed by palms" loading="lazy" className="aspect-[3/4] w-full object-cover grayscale" />
         </Reveal>
         <div className="space-y-16 md:col-span-6 md:col-start-7">
           <Reveal>

@@ -37,6 +37,24 @@
   :focus-visible {
     @apply outline outline-1 outline-offset-4 outline-bronze;
   }
+  /* Tailwind v4 resets buttons to the default cursor */
+  button:not(:disabled),
+  [role='button']:not([aria-disabled='true']) {
+    cursor: pointer;
+  }
+  button:disabled {
+    cursor: not-allowed;
+  }
+  /* Chrome autofill paints a light, rounded box; keep inputs flat, sharp and on the dark surface */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--color-ink);
+    caret-color: var(--color-ink);
+    border-radius: 0;
+    box-shadow: 0 0 0 1000px var(--color-void) inset;
+    transition: background-color 9999s ease-out 0s;
+  }
 }
 
 @utility label-caps {

@@ -1,8 +1,6 @@
 import { motion } from 'framer-motion'
 import { ArrowDown, ArrowRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import heroFallback from '../../assets/images/cultural-center.webp'
-import aboutImage from '../../assets/images/interior.webp'
 import { Reveal } from '../../components/common/Reveal'
 import { ErrorState, Loading } from '../../components/common/Status'
 import { ProjectCard } from '../../components/public/ProjectCard'
@@ -14,7 +12,7 @@ export default function Home() {
   const { data: projects, error, loading } = useApi(getProjects)
   // No "featured" flag in the API yet: show the three most recent published projects
   const featured = (projects ?? []).slice(0, 3)
-  const heroImage = featured.find((p) => p.coverImageUrl)?.coverImageUrl ?? heroFallback
+  const heroImage = featured.find((p) => p.coverImageUrl)?.coverImageUrl ?? site.images.heroFallback
 
   return (
     <>
@@ -99,7 +97,7 @@ export default function Home() {
             </Link>
           </Reveal>
           <Reveal className="md:col-span-6 md:col-start-7" delay={0.15}>
-            <img src={aboutImage} alt="Interior with floor-to-ceiling windows" loading="lazy" className="aspect-[4/3] w-full object-cover" />
+            <img src={site.images.studio} alt="Double-height living room in Villa Moonlight" loading="lazy" className="aspect-[4/3] w-full object-cover" />
           </Reveal>
         </div>
       </section>

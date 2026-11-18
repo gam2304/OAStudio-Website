@@ -40,3 +40,19 @@ export interface ContactMessageRequest {
   subject: string
   message: string
 }
+
+export type AdminRole = 'ADMIN' | 'SUPER_ADMIN'
+
+export interface AdminAccount {
+  id: number
+  username: string
+  email: string
+  role: AdminRole
+  createdAt: string | null
+}
+
+export interface AuthResponse {
+  accessToken: string
+  tokenType: string
+  expiresIn: number
+}
