@@ -60,7 +60,7 @@ public class AdminBootstrap {
             admin.setUsername(username);
             admin.setEmail(email);
             admin.setPasswordHash(passwordEncoder.encode(password));
-            admin.setRole(UserRole.ADMIN);
+            admin.setRole(UserRole.SUPER_ADMIN);
 
             adminRepository.save(admin);
 

@@ -1,6 +1,7 @@
 
 package com.oastudio.api.exception;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,12 +17,24 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(AuthenticationException.class)
-    public ResponseEntity<Map<String, String>> handleAuthenticationException(
+    public ResponseEntity<Map<String, Object>> handleAuthenticationException(
             AuthenticationException exception) {
 
-        return ResponseEntity
-                .status(HttpStatus.UNAUTHORIZED)
-                .body(Map.of("error", "Invalid username or password"));
+        return buildResponse(HttpStatus.UNAUTHORIZED, "Invalid username or password");
+    }
+
+    @ExceptionHandler(LoginLockedException.class)
+    public ResponseEntity<Map<String, Object>> handleLoginLocked(
+            LoginLockedException ex) {
+
+        return buildResponse(HttpStatus.TOO_MANY_REQUESTS, ex.getMessage());
+    }
+
+    @ExceptionHandler(InvalidRequestException.class)
+    public ResponseEntity<Map<String, Object>> handleInvalidRequest(
+            InvalidRequestException ex) {
+
+        return buildResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
@@ -36,6 +49,22 @@ public class GlobalExceptionHandler {
             DuplicateResourceException ex) {
 
         return buildResponse(HttpStatus.CONFLICT, ex.getMessage());
+    }
+
+    // DB constraint hit, e.g. two concurrent creates with the same username.
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<Map<String, Object>> handleDataIntegrity(
+            DataIntegrityViolationException ex) {
+
+        return buildResponse(HttpStatus.CONFLICT,
+                "Request conflicts with existing data");
+    }
+
+    @ExceptionHandler(OperationNotAllowedException.class)
+    public ResponseEntity<Map<String, Object>> handleNotAllowed(
+            OperationNotAllowedException ex) {
+
+        return buildResponse(HttpStatus.FORBIDDEN, ex.getMessage());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

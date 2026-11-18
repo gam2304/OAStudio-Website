@@ -35,4 +35,6 @@ public interface ProjectService {
 
     void deleteProjectCover(Long projectId);
 
+    ProjectResponse setCoverFromGallery(Long projectId, Long imageId);
+
 }

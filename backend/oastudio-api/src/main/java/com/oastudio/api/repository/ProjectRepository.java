@@ -14,6 +14,8 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 
     boolean existsBySlug(String slug);
 
+    boolean existsByCoverPublicId(String coverPublicId);
+
     List<Project> findByStatus(ProjectStatus status);
 
     List<Project> findByCategoryId(Long categoryId);

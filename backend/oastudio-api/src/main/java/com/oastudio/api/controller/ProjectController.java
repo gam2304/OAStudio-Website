@@ -119,6 +119,16 @@ public class ProjectController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    // Use an existing gallery image as the cover
+    @PutMapping("/api/admin/projects/{projectId}/cover/{imageId}")
+    public ResponseEntity<ProjectResponse> setCoverFromGallery(
+            @PathVariable Long projectId,
+            @PathVariable Long imageId) {
+
+        return ResponseEntity.ok(
+                projectService.setCoverFromGallery(projectId, imageId));
+    }
+
     @DeleteMapping("/api/admin/projects/{projectId}/cover")
     public ResponseEntity<Void> deleteProjectCover(
             @PathVariable Long projectId) {
