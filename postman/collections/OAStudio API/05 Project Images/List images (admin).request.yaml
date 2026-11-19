@@ -1,0 +1,13 @@
+$kind: http-request
+url: "{{baseUrl}}/api/admin/projects/{{projectId}}/images"
+method: GET
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status is 200", () => pm.response.to.have.status(200));
+
+      const list = pm.response.json();
+      pm.test("Contains added image", () => pm.expect(list.map(i => i.id)).to.include(Number(pm.collectionVariables.get("imageId"))));
+      pm.test("Sorted by displayOrder", () => list.slice(1).forEach((img, k) => pm.expect(img.displayOrder).to.be.at.least(list[k].displayOrder)));
+    language: text/javascript
+order: 4000

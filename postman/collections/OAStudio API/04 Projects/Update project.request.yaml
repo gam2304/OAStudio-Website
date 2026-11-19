@@ -1,0 +1,26 @@
+$kind: http-request
+url: "{{baseUrl}}/api/admin/projects/{{projectId}}"
+method: PUT
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "title": "Test Villa Updated {{runId}}",
+      "slug": "test-villa-{{runId}}",
+      "location": "Tunis, Tunisia",
+      "year": 2024,
+      "description": "Created by the Postman suite.",
+      "architecturalConcept": "Mass and light.",
+      "area": 350.5,
+      "status": "DRAFT",
+      "categoryId": {{categoryId}}
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status is 200", () => pm.response.to.have.status(200));
+      pm.test("Title updated", () => pm.expect(pm.response.json().title).to.eql("Test Villa Updated " + pm.collectionVariables.get("runId")));
+    language: text/javascript
+order: 14000

@@ -1,0 +1,23 @@
+$kind: http-request
+url: "{{baseUrl}}/api/admin/categories"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "categoryName": "",
+      "slug": ""
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status is 400", () => pm.response.to.have.status(400));
+      pm.test("Validation messages name the bad fields", () => {
+          const m = pm.response.json().messages;
+          pm.expect(m, "messages.categoryName").to.have.property("categoryName");
+          pm.expect(m, "messages.slug").to.have.property("slug");
+      });
+    language: text/javascript
+order: 4000

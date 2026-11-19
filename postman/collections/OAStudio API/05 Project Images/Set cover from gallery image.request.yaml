@@ -1,0 +1,10 @@
+$kind: http-request
+url: "{{baseUrl}}/api/admin/projects/{{projectId}}/cover/{{imageId}}"
+method: PUT
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status is 200", () => pm.response.to.have.status(200));
+      pm.test("Cover is the gallery image", () => pm.expect(pm.response.json().coverImageUrl).to.eql("https://res.cloudinary.com/demo/image/upload/sample.jpg"));
+    language: text/javascript
+order: 16000

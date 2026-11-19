@@ -1,0 +1,20 @@
+$kind: http-request
+url: "{{baseUrl}}/api/admin/categories/{{categoryId}}"
+method: PUT
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "categoryName": "Test Category {{runId}}",
+      "slug": "test-category-{{runId}}",
+      "description": "Updated by the Postman suite"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status is 200", () => pm.response.to.have.status(200));
+      pm.test("Description updated", () => pm.expect(pm.response.json().description).to.eql("Updated by the Postman suite"));
+    language: text/javascript
+order: 9000

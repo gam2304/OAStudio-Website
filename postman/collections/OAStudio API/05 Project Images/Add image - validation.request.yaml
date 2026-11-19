@@ -1,0 +1,23 @@
+$kind: http-request
+url: "{{baseUrl}}/api/admin/projects/{{projectId}}/images"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "imageUrl": "",
+      "displayOrder": -1
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status is 400", () => pm.response.to.have.status(400));
+      pm.test("Validation messages name the bad fields", () => {
+          const m = pm.response.json().messages;
+          pm.expect(m, "messages.imageUrl").to.have.property("imageUrl");
+          pm.expect(m, "messages.displayOrder").to.have.property("displayOrder");
+      });
+    language: text/javascript
+order: 2000

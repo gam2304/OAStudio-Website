@@ -1,0 +1,22 @@
+$kind: http-request
+url: "{{baseUrl}}/api/contact-messages"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: "{}"
+auth:
+  type: noauth
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status is 400", () => pm.response.to.have.status(400));
+      pm.test("Validation messages name the bad fields", () => {
+          const m = pm.response.json().messages;
+          pm.expect(m, "messages.senderName").to.have.property("senderName");
+          pm.expect(m, "messages.senderEmail").to.have.property("senderEmail");
+          pm.expect(m, "messages.message").to.have.property("message");
+      });
+    language: text/javascript
+order: 2000

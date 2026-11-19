@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1200" viewBox="0 0 900 1200">
+  <!-- Placeholder portrait: replace with the founder's photo (site.founder.photoUrl) -->
+  <rect width="900" height="1200" fill="#1c1c18"/>
+  <g fill="#2b2a26">
+    <circle cx="450" cy="470" r="170"/>
+    <path d="M130 1200c0-230 143-390 320-390s320 160 320 390z"/>
+  </g>
+  <text x="450" y="1120" fill="#6b675f" font-family="Inter, Arial, sans-serif" font-size="30" text-anchor="middle">Photo à venir</text>
+</svg>

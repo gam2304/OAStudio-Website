@@ -12,4 +12,4 @@ target/
 /backend/oastudio-api/keys/jwt-private.pem
 
 # Postman environment with real local credentials
-postman/environments/OASTUDIO - Local.environment.yaml
+postman/environments/*Local.environment.yaml

@@ -4,7 +4,8 @@ workspace:
 # Each entry here maps a local resource to one or more corresponding objects in Postman Cloud
 
 cloudResources:
-  collections: {}
+  collections:
+    ../postman/collections/OAStudio API: 55b72239-b7c6-4e52-ad53-f854d9e235f8
   environments: {}
   globals:
     ../postman/globals/workspace.globals.yaml: 54db8471-38c7-4dc9-8efe-619dba050b41

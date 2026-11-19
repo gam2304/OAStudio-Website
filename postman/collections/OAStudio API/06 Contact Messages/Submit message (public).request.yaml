@@ -1,0 +1,29 @@
+$kind: http-request
+url: "{{baseUrl}}/api/contact-messages"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "senderName": "Postman Tester",
+      "senderEmail": "tester@example.com",
+      "subject": "Suite run {{runId}}",
+      "message": "Automated test message."
+    }
+auth:
+  type: noauth
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status is 201", () => pm.response.to.have.status(201));
+
+      const m = pm.response.json();
+      pm.test("Stored as NEW", () => {
+          pm.expect(m.id).to.be.a("number");
+          pm.expect(m.status).to.eql("NEW");
+      });
+      pm.collectionVariables.set("messageId", m.id);
+    language: text/javascript
+order: 1000
