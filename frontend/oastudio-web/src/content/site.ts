@@ -8,6 +8,12 @@ const cloudinary = (path: string, width: number, crop = '') =>
 
 export const site = {
   name: 'OA Architecture',
+
+  founder: {
+    name: 'Oussama Attia',
+    // PLACEHOLDER portrait (public/founder-placeholder.svg); replace with the real photo URL
+    photoUrl: '/founder-placeholder.svg',
+  },
   images: {
     heroFallback: cloudinary('v1794966558/oastudio/projects/duo-residences/3.jpg', 2400), // DUO Residences at dusk
     studio: cloudinary('v1794966607/oastudio/projects/villa-moonlight/5.jpg', 1400), // Villa Moonlight living room
@@ -22,6 +28,7 @@ export const site = {
     email: 'oa.studio@outlook.com',
     // International format, digits only, for https://wa.me/<number>
     whatsapp: '21652685812',
+    tel: '+21652685812',
     // Google Maps embed URL; leave empty to hide the map
     // Pin = studio's Google Maps place (maps.app.goo.gl/zawdf9XQVJfs4We49)
     mapEmbedUrl: 'https://maps.google.com/maps?q=35.7339612,10.5757821&z=17&output=embed',

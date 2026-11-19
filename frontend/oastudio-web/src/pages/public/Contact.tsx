@@ -8,7 +8,7 @@ import { useLang } from '../../i18n/LanguageContext'
 import type { ContactMessageRequest } from '../../types'
 import { validateContact, type ContactErrors } from '../../utils/validateContact'
 
-const empty: ContactMessageRequest = { senderName: '', senderEmail: '', subject: '', message: '' }
+const empty: ContactMessageRequest = { senderName: '', senderEmail: '', senderPhone: '', projectType: '', subject: '', message: '' }
 
 export default function Contact() {
   const [form, setForm] = useState(empty)
@@ -27,7 +27,7 @@ export default function Contact() {
     if (Object.keys(found).length) return
     setStatus('sending')
     try {
-      await sendContactMessage({ ...form, senderName: form.senderName.trim(), senderEmail: form.senderEmail.trim() })
+      await sendContactMessage({ ...form, senderName: form.senderName.trim(), senderEmail: form.senderEmail.trim(), senderPhone: form.senderPhone.trim() })
       setForm(empty)
       setStatus('sent')
     } catch (err) {
@@ -60,7 +60,7 @@ export default function Contact() {
           onChange={set(k)}
           aria-invalid={!!errors[k]}
           aria-describedby={errors[k] ? `${k}-error` : undefined}
-          autoComplete={k === 'senderName' ? 'name' : k === 'senderEmail' ? 'email' : undefined}
+          autoComplete={k === 'senderName' ? 'name' : k === 'senderEmail' ? 'email' : k === 'senderPhone' ? 'tel' : undefined}
           className="w-full border-b border-stone/30 bg-transparent py-2 outline-none transition-colors focus:border-bronze aria-[invalid=true]:border-error"
         />
       )}
@@ -88,6 +88,26 @@ export default function Contact() {
               {field('senderName', t.contact.name)}
               {field('senderEmail', t.contact.email, { type: 'email' })}
             </div>
+            <div className="grid gap-10 md:grid-cols-2">
+              {field('senderPhone', t.contact.phone, { type: 'tel', optional: true })}
+              <div>
+                <label htmlFor="projectType" className="label-caps mb-3 block text-ink/60">
+                  {t.contact.projectType}
+                  <span className="ml-2 normal-case tracking-normal text-ink/30">{t.contact.optional}</span>
+                </label>
+                <select
+                  id="projectType"
+                  value={form.projectType}
+                  onChange={set('projectType')}
+                  className="w-full border-b border-stone/30 bg-transparent py-2 outline-none transition-colors focus:border-bronze"
+                >
+                  <option value="" className="bg-surface">{t.contact.choose}</option>
+                  {[...t.services.map((s) => s.title), t.contact.other].map((title) => (
+                    <option key={title} value={title} className="bg-surface">{title}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
             {field('subject', t.contact.subject, { optional: true })}
             {field('message', t.contact.message, { textarea: true })}
 
@@ -111,9 +131,15 @@ export default function Contact() {
             <h2 className="label-caps mb-4 text-gold">{t.contact.office}</h2>
             <address className="space-y-2 not-italic text-ink/70">
               <p>{contact.address}</p>
-              <p>{contact.phone}</p>
-              <p>{contact.email}</p>
+              <p><a href={`tel:${contact.tel}`} className="hover:text-bronze">{contact.phone}</a></p>
+              <p><a href={`mailto:${contact.email}`} className="hover:text-bronze">{contact.email}</a></p>
             </address>
+          </div>
+          <div>
+            <h2 className="label-caps mb-4 text-gold">{t.contact.hoursLabel}</h2>
+            <ul className="space-y-2 text-ink/70">
+              {t.contact.hours.map((h) => <li key={h}>{h}</li>)}
+            </ul>
           </div>
           {social.some((s) => s.href) && (
             <div>

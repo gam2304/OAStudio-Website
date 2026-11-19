@@ -1,3 +1,5 @@
+import { ArrowRight } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { Reveal } from '../../components/common/Reveal'
 import { OfficeMap } from '../../components/public/OfficeMap'
 import { site } from '../../content/site'
@@ -13,6 +15,29 @@ export default function About() {
           <p className="label-caps mb-6 text-gold">{t.aboutPage.theStudio}</p>
           <h1 className="display-xl mb-10">{about.headline}</h1>
           <p className="body-lg max-w-2xl text-ink/70">{about.presentation}</p>
+        </Reveal>
+      </section>
+
+      <section className="page-x mx-auto mt-section grid max-w-[1440px] items-center gap-16 md:grid-cols-12">
+        <Reveal className="md:order-2 md:col-span-5 md:col-start-8">
+          <img src={site.founder.photoUrl} alt={site.founder.name} loading="lazy" className="aspect-[3/4] w-full object-cover grayscale" />
+        </Reveal>
+        <Reveal className="md:order-1 md:col-span-6">
+          <p className="label-caps mb-6 text-gold">{t.aboutPage.founder}</p>
+          <h2 className="headline-lg">{site.founder.name}</h2>
+          <p className="label-caps mb-10 mt-3 text-ink/50">{t.aboutPage.founderRole}</p>
+          <p className="body-lg text-ink/70">{t.aboutPage.founderBio}</p>
+          {t.aboutPage.founderQuote && (
+            <blockquote className="headline-md mt-10 border-l border-bronze pl-6 italic">“{t.aboutPage.founderQuote}”</blockquote>
+          )}
+          <ul className="mt-10 flex flex-wrap gap-3">
+            {services.map((s) => (
+              <li key={s.title} className="label-caps border border-stone/20 px-4 py-2 text-[10px] text-ink/60">{s.title}</li>
+            ))}
+          </ul>
+          <Link to="/founder" className="label-caps mt-10 inline-flex items-center gap-3 transition-colors hover:text-bronze">
+            {t.home.founderLink} <ArrowRight size={16} strokeWidth={1.25} />
+          </Link>
         </Reveal>
       </section>
 

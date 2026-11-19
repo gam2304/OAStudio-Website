@@ -55,6 +55,25 @@ export default function Home() {
           >
             {t.hero.intro}
           </motion.p>
+          <motion.div
+            className="mt-10 flex flex-wrap gap-4"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.1, duration: 0.9 }}
+          >
+            <Link
+              to="/contact"
+              className="label-caps border border-transparent bg-paper px-8 py-4 text-void transition-colors duration-500 hover:border-bronze hover:text-bronze"
+            >
+              {t.home.startProject}
+            </Link>
+            <Link
+              to="/projects"
+              className="label-caps border border-ink/40 px-8 py-4 transition-colors duration-500 hover:border-bronze hover:text-bronze"
+            >
+              {t.home.seeProjects}
+            </Link>
+          </motion.div>
         </div>
         <ArrowDown className="absolute bottom-16 right-6 hidden text-ink/50 md:right-20 md:block" strokeWidth={1} aria-hidden />
       </section>
@@ -103,6 +122,22 @@ export default function Home() {
             <img src={site.images.studio} alt={t.home.studioAlt} loading="lazy" className="aspect-[4/3] w-full object-cover" />
           </Reveal>
         </div>
+      </section>
+
+      {/* Founder */}
+      <section className="page-x mx-auto mt-section grid max-w-[1440px] items-center gap-16 md:grid-cols-12">
+        <Reveal className="md:col-span-5">
+          <img src={site.founder.photoUrl} alt={site.founder.name} loading="lazy" className="aspect-[3/4] w-full object-cover grayscale" />
+        </Reveal>
+        <Reveal className="md:col-span-6 md:col-start-7" delay={0.15}>
+          <p className="label-caps mb-4 text-gold">{t.aboutPage.founder}</p>
+          <h2 className="headline-lg">{site.founder.name}</h2>
+          <p className="label-caps mb-8 mt-3 text-ink/50">{t.aboutPage.founderRole}</p>
+          <p className="body-lg mb-10 text-ink/70">{t.aboutPage.founderBio}</p>
+          <Link to="/founder" className="label-caps inline-flex items-center gap-3 transition-colors hover:text-bronze">
+            {t.home.founderLink} <ArrowRight size={16} strokeWidth={1.25} />
+          </Link>
+        </Reveal>
       </section>
 
       {/* Services */}

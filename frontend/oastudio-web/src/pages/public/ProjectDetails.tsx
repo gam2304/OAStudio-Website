@@ -19,9 +19,11 @@ export default function ProjectDetails() {
 
   const p = project.data
   useEffect(() => {
-    if (p) document.title = `${p.title} | ${site.name}`
+    if (!p) return
+    const previous = document.title // the SEO title from index.html
+    document.title = `${p.title} – ${p.location ?? `${site.name} M'saken`} | Architecte Tunisie`
     return () => {
-      document.title = site.name
+      document.title = previous
     }
   }, [p])
 

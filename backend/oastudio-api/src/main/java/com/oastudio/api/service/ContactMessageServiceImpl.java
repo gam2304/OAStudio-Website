@@ -29,6 +29,8 @@ public class ContactMessageServiceImpl implements ContactMessageService {
 
         message.setSenderName(request.senderName());
         message.setSenderEmail(request.senderEmail());
+        message.setSenderPhone(blankToNull(request.senderPhone()));
+        message.setProjectType(blankToNull(request.projectType()));
         message.setSubject(request.subject());
         message.setMessage(request.message());
         message.setStatus(MessageStatus.NEW);
@@ -102,12 +104,18 @@ public class ContactMessageServiceImpl implements ContactMessageService {
                 ));
     }
 
+    private static String blankToNull(String value) {
+        return value == null || value.isBlank() ? null : value.trim();
+    }
+
     private ContactMessageResponse mapToResponse(ContactMessage message) {
 
         return new ContactMessageResponse(
                 message.getId(),
                 message.getSenderName(),
                 message.getSenderEmail(),
+                message.getSenderPhone(),
+                message.getProjectType(),
                 message.getSubject(),
                 message.getMessage(),
                 message.getStatus().name(),

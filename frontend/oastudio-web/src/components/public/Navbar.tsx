@@ -14,6 +14,7 @@ export function Navbar() {
     { to: '/', label: t.nav.home },
     { to: '/projects', label: t.nav.projects },
     { to: '/about', label: t.nav.studio },
+    { to: '/founder', label: t.nav.about },
     { to: '/contact', label: t.nav.contact },
   ]
 
@@ -48,6 +49,15 @@ export function Navbar() {
         </Link>
 
         <div className="flex items-center gap-6 md:gap-10">
+          <NavLink
+            to="/founder"
+            onClick={close}
+            className={({ isActive }) =>
+              `label-caps hidden transition-colors duration-500 hover:text-bronze md:inline-block ${isActive ? 'text-gold' : ''}`
+            }
+          >
+            {t.nav.about}
+          </NavLink>
           <Link
             to="/contact"
             onClick={close}

@@ -37,6 +37,8 @@ export interface ProjectImage {
 export interface ContactMessageRequest {
   senderName: string
   senderEmail: string
+  senderPhone: string
+  projectType: string
   subject: string
   message: string
 }
@@ -63,6 +65,8 @@ export interface ContactMessage {
   id: number
   senderName: string
   senderEmail: string
+  senderPhone: string | null
+  projectType: string | null
   subject: string | null
   message: string
   status: MessageStatus

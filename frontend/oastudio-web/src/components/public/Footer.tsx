@@ -40,8 +40,9 @@ export function Footer() {
           <h2 className="label-caps mb-6 text-ink">{t.footer.office}</h2>
           <address className="space-y-2 text-sm not-italic text-ink/50">
             <p>{site.contact.address}</p>
-            <p>{site.contact.phone}</p>
-            <p>{site.contact.email}</p>
+            <p><a href={`tel:${site.contact.tel}`} className="hover:text-bronze">{site.contact.phone}</a></p>
+            <p><a href={`mailto:${site.contact.email}`} className="hover:text-bronze">{site.contact.email}</a></p>
+            <p>{t.contact.hours.join(' · ')}</p>
           </address>
           <a
             href={`https://wa.me/${site.contact.whatsapp}`}

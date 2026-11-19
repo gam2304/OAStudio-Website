@@ -11,6 +11,7 @@ export function validateContact(f: ContactMessageRequest, msg = en.contact.error
   if (!f.senderEmail.trim()) e.senderEmail = msg.emailRequired
   else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.senderEmail.trim())) e.senderEmail = msg.emailInvalid
   else if (f.senderEmail.length > 200) e.senderEmail = msg.emailLong
+  if (f.senderPhone.trim() && !/^[+0-9 ().-]{6,30}$/.test(f.senderPhone.trim())) e.senderPhone = msg.phoneInvalid
   if (f.subject.length > 255) e.subject = msg.subjectLong
   if (!f.message.trim()) e.message = msg.messageRequired
   return e

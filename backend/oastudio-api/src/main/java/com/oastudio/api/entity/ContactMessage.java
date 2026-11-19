@@ -27,6 +27,12 @@ public class ContactMessage {
     @Column(name = "sender_email", nullable = false, length = 200)
     private String senderEmail;
 
+    @Column(name = "sender_phone", length = 30)
+    private String senderPhone;
+
+    @Column(name = "project_type", length = 100)
+    private String projectType;
+
     @Column(length = 255)
     private String subject;
 

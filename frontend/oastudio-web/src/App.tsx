@@ -6,6 +6,7 @@ import { Loading } from './components/common/Status'
 import PublicLayout from './layouts/PublicLayout'
 import About from './pages/public/About'
 import Contact from './pages/public/Contact'
+import Founder from './pages/public/Founder'
 import Home from './pages/public/Home'
 import NotFound from './pages/public/NotFound'
 import ProjectDetails from './pages/public/ProjectDetails'
@@ -45,6 +46,7 @@ export default function App() {
             <Route path="projects" element={<Projects />} />
             <Route path="projects/:slug" element={<ProjectDetails />} />
             <Route path="about" element={<About />} />
+            <Route path="founder" element={<Founder />} />
             <Route path="contact" element={<Contact />} />
             <Route path="*" element={<NotFound />} />
           </Route>
