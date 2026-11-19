@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { useState, type FormEvent } from 'react'
 import { Reveal } from '../../components/common/Reveal'
 import { OfficeMap } from '../../components/public/OfficeMap'
@@ -31,7 +32,8 @@ export default function Contact() {
       setForm(empty)
       setStatus('sent')
     } catch (err) {
-      setServerError(errorMessage(err, t.contact.sendError))
+      // 429: this visitor already sent the daily maximum of messages
+      setServerError(axios.isAxiosError(err) && err.response?.status === 429 ? t.contact.tooMany : errorMessage(err, t.contact.sendError))
       setStatus('error')
     }
   }

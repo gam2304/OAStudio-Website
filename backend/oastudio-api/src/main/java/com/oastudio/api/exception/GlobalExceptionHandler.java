@@ -40,6 +40,13 @@ public class GlobalExceptionHandler {
         return buildResponse(HttpStatus.TOO_MANY_REQUESTS, ex.getMessage());
     }
 
+    @ExceptionHandler(TooManyMessagesException.class)
+    public ResponseEntity<Map<String, Object>> handleTooManyMessages(
+            TooManyMessagesException ex) {
+
+        return buildResponse(HttpStatus.TOO_MANY_REQUESTS, ex.getMessage());
+    }
+
     @ExceptionHandler(InvalidRequestException.class)
     public ResponseEntity<Map<String, Object>> handleInvalidRequest(
             InvalidRequestException ex) {

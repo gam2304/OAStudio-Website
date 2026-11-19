@@ -22,6 +22,7 @@ const Categories = lazy(() => import('./pages/admin/Categories'))
 const Messages = lazy(() => import('./pages/admin/Messages'))
 const Admins = lazy(() => import('./pages/admin/Admins'))
 const Account = lazy(() => import('./pages/admin/Account'))
+const HomeEditor = lazy(() => import('./pages/admin/HomeEditor'))
 
 export default function App() {
   return (
@@ -40,6 +41,7 @@ export default function App() {
             <Route path="messages" element={<Messages />} />
             <Route path="admins" element={<Admins />} />
             <Route path="account" element={<Account />} />
+            <Route path="home" element={<HomeEditor />} />
           </Route>
           <Route element={<PublicLayout />}>
             <Route index element={<Home />} />

@@ -27,13 +27,17 @@ public class CloudinaryService {
     );
 
     public Map uploadImage(MultipartFile file, Long projectId) throws IOException {
+        return uploadImage(file, "oastudio/projects/" + projectId);
+    }
+
+    public Map uploadImage(MultipartFile file, String folder) throws IOException {
 
         validateImage(file);
 
         return cloudinary.uploader().upload(
                 file.getBytes(),
                 ObjectUtils.asMap(
-                        "folder", "oastudio/projects/" + projectId,
+                        "folder", folder,
                         "resource_type", "image"
                 )
         );

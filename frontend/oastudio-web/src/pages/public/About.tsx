@@ -3,10 +3,14 @@ import { Link } from 'react-router-dom'
 import { Reveal } from '../../components/common/Reveal'
 import { OfficeMap } from '../../components/public/OfficeMap'
 import { site } from '../../content/site'
+import { defaultHomeContent, tr } from '../../content/homeContent'
+import { useHomeContent } from '../../hooks/useHomeContent'
 import { useLang } from '../../i18n/LanguageContext'
 
 export default function About() {
-  const { t } = useLang()
+  const { t, lang } = useLang()
+  // Same founder block the admin edits on the landing page
+  const founder = (useHomeContent() ?? defaultHomeContent).founder
   const { about, services } = t
   return (
     <div className="pt-40">
@@ -20,13 +24,13 @@ export default function About() {
 
       <section className="page-x mx-auto mt-section grid max-w-[1440px] items-center gap-16 md:grid-cols-12">
         <Reveal className="md:order-2 md:col-span-5 md:col-start-8">
-          <img src={site.founder.photoUrl} alt={site.founder.name} loading="lazy" className="aspect-[3/4] w-full object-cover grayscale" />
+          <img src={founder.photoUrl} alt={founder.name} loading="lazy" className="aspect-[3/4] w-full object-cover grayscale" />
         </Reveal>
         <Reveal className="md:order-1 md:col-span-6">
           <p className="label-caps mb-6 text-ink/50">{t.aboutPage.founder}</p>
-          <h2 className="headline-lg">{site.founder.name}</h2>
-          <p className="label-caps mb-10 mt-3 text-ink/50">{t.aboutPage.founderRole}</p>
-          <p className="body-lg text-ink/70">{t.aboutPage.founderBio}</p>
+          <h2 className="headline-lg">{founder.name}</h2>
+          <p className="label-caps mb-10 mt-3 text-ink/50">{tr(founder.role, lang)}</p>
+          <p className="body-lg whitespace-pre-line text-ink/70">{tr(founder.bio, lang)}</p>
           {t.aboutPage.founderQuote && (
             <blockquote className="headline-md mt-10 border-l border-bronze pl-6 italic">“{t.aboutPage.founderQuote}”</blockquote>
           )}

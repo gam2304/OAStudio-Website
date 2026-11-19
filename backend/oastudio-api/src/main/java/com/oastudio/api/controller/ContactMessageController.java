@@ -1,6 +1,9 @@
 
 package com.oastudio.api.controller;
 
+import com.oastudio.api.security.ContactRateLimiter;
+import jakarta.servlet.http.HttpServletRequest;
+
 import com.oastudio.api.dto.request.ContactMessageRequest;
 import com.oastudio.api.dto.response.ContactMessageResponse;
 import com.oastudio.api.enums.MessageStatus;
@@ -18,12 +21,16 @@ import java.util.List;
 public class ContactMessageController {
 
     private final ContactMessageService contactMessageService;
+    private final ContactRateLimiter contactRateLimiter;
 
     // PUBLIC: Submit a contact message
     @PostMapping("/api/contact-messages")
     public ResponseEntity<ContactMessageResponse> createMessage(
-            @Valid @RequestBody ContactMessageRequest request) {
+            @Valid @RequestBody ContactMessageRequest request,
+            HttpServletRequest httpRequest) {
 
+        // Remote address of the TCP connection; behind a reverse proxy, enable server.forward-headers-strategy
+        contactRateLimiter.acquire(httpRequest.getRemoteAddr());
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(contactMessageService.createMessage(request));
     }
