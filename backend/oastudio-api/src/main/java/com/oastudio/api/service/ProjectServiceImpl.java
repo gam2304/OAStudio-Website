@@ -40,7 +40,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Transactional(readOnly = true)
     public List<ProjectResponse> getPublishedProjects() {
 
-        return projectRepository.findByStatus(ProjectStatus.PUBLISHED)
+        return projectRepository.findByStatusOrderByCreatedAtDescIdDesc(ProjectStatus.PUBLISHED)
                 .stream()
                 .map(this::mapToResponse)
                 .toList();
@@ -328,7 +328,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Transactional(readOnly = true)
     public List<ProjectResponse> getProjectsByStatus(ProjectStatus status) {
 
-        return projectRepository.findByStatus(status)
+        return projectRepository.findByStatusOrderByCreatedAtDescIdDesc(status)
                 .stream()
                 .map(this::mapToResponse)
                 .toList();

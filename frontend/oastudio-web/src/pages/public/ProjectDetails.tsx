@@ -52,7 +52,7 @@ export default function ProjectDetails() {
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent" />
         <div className="page-x absolute inset-x-0 bottom-16 md:bottom-24">
-          {p.category && <p className="label-caps mb-4 tracking-[0.3em] text-gold">{p.category.categoryName}</p>}
+          {p.category && <p className="label-caps mb-4 text-ink/50">{p.category.categoryName}</p>}
           <h1 className="display-xl max-w-4xl">{p.title}</h1>
         </div>
       </section>
@@ -63,14 +63,14 @@ export default function ProjectDetails() {
           <dl className="space-y-6 border-t border-stone/20 pt-8">
             {facts.map(([k, v]) => (
               <div key={k as string}>
-                <dt className="label-caps mb-1 text-gold">{k}</dt>
+                <dt className="label-caps mb-1 text-ink/50">{k}</dt>
                 <dd className="text-ink/70">{v}</dd>
               </div>
             ))}
           </dl>
         </Reveal>
         <Reveal className="md:col-span-7 md:col-start-6" delay={0.1}>
-          <h2 className="label-caps mb-6 text-gold">{t.project.narrative}</h2>
+          <h2 className="label-caps mb-6 text-ink/50">{t.project.narrative}</h2>
           {p.description && <p className="body-lg whitespace-pre-line text-ink/80">{p.description}</p>}
         </Reveal>
       </section>
@@ -79,8 +79,8 @@ export default function ProjectDetails() {
       {p.architecturalConcept && (
         <section className="page-x mx-auto mt-section max-w-[1440px]">
           <Reveal className="mx-auto max-w-4xl text-center">
-            <h2 className="label-caps mb-8 text-gold">{t.project.concept}</h2>
-            <p className="headline-lg whitespace-pre-line italic">{p.architecturalConcept}</p>
+            <h2 className="label-caps mb-8 text-ink/50">{t.project.concept}</h2>
+            <p className="headline-lg whitespace-pre-line">{p.architecturalConcept}</p>
           </Reveal>
         </section>
       )}

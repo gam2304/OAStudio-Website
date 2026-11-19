@@ -1,4 +1,4 @@
-import { Search } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Search } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { Reveal } from '../../components/common/Reveal'
@@ -8,8 +8,11 @@ import { useApi } from '../../hooks/useApi'
 import { useLang } from '../../i18n/LanguageContext'
 import { getCategories, getProjects } from '../../services/publicApi'
 
-// Varying aspect ratios give the masonry columns their editorial rhythm
+// Each row of two shares an aspect ratio, so the grid reads newest-first left to right with no gaps
 const aspects = ['aspect-[3/4]', 'aspect-square', 'aspect-[16/10]', 'aspect-[4/5]']
+
+// Fewer cards per page means fewer images to download
+const PAGE_SIZE = 15
 
 export default function Projects() {
   const projects = useApi(getProjects)
@@ -18,6 +21,7 @@ export default function Projects() {
   const [params, setParams] = useSearchParams()
   const [query, setQuery] = useState('')
   const active = params.get('category') ?? ''
+  const requestedPage = Number(params.get('page')) || 1
 
   const visible = useMemo(() => {
     const q = query.trim().toLowerCase()
@@ -28,10 +32,33 @@ export default function Projects() {
     )
   }, [projects.data, active, query])
 
+  const pageCount = Math.max(1, Math.ceil(visible.length / PAGE_SIZE))
+  const page = Math.min(Math.max(1, requestedPage), pageCount)
+  const pageItems = visible.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
+
+  // Changing the filter or search starts again from page 1
   const setCategory = (slug: string) => setParams(slug ? { category: slug } : {}, { replace: true })
+  const onSearch = (value: string) => {
+    setQuery(value)
+    if (!params.has('page')) return
+    const next = new URLSearchParams(params)
+    next.delete('page')
+    setParams(next, { replace: true })
+  }
+  const goToPage = (n: number) => {
+    const next = new URLSearchParams(params)
+    if (n > 1) next.set('page', String(n))
+    else next.delete('page')
+    setParams(next)
+    window.scrollTo({ top: 0 })
+  }
+  const pageClass = (on: boolean) =>
+    `label-caps press flex h-10 min-w-10 items-center justify-center border px-3 disabled:opacity-30 ${
+      on ? 'border-gold text-gold' : 'border-stone/20 text-ink/60 hover:border-bronze hover:text-bronze'
+    }`
 
   const filterClass = (on: boolean) =>
-    `label-caps border-b-2 pb-1 transition-colors duration-300 ${
+    `label-caps press border-b-2 pb-1 ${
       on ? 'border-gold text-gold' : 'border-transparent text-ink/40 hover:border-ink/20 hover:text-ink'
     }`
 
@@ -67,7 +94,7 @@ export default function Projects() {
             <input
               type="search"
               value={query}
-              onChange={(e) => setQuery(e.target.value)}
+              onChange={(e) => onSearch(e.target.value)}
               placeholder={t.projects.search}
               className="w-full bg-transparent text-sm outline-none placeholder:text-ink/30"
             />
@@ -80,13 +107,35 @@ export default function Projects() {
       {projects.data && !visible.length && (
         <p className="py-24 text-center text-ink/50">{t.projects.none}</p>
       )}
-      <div className="gap-gutter lg:columns-2">
-        {visible.map((p, i) => (
-          <Reveal key={p.id} className="mb-gutter break-inside-avoid">
-            <ProjectCard project={p} aspect={aspects[i % aspects.length]} />
+      <div className="grid gap-gutter lg:grid-cols-2">
+        {pageItems.map((p, i) => (
+          <Reveal key={p.id} duration={active || query || page > 1 ? 0.2 : undefined}>
+            <ProjectCard project={p} aspect={aspects[Math.floor(i / 2) % aspects.length]} />
           </Reveal>
         ))}
       </div>
+
+      {pageCount > 1 && (
+        <nav aria-label={t.projects.pagination} className="mt-section flex flex-wrap items-center justify-center gap-3">
+          <button type="button" className={pageClass(false)} disabled={page === 1} onClick={() => goToPage(page - 1)} aria-label={t.projects.prev}>
+            <ArrowLeft size={14} strokeWidth={1.5} />
+          </button>
+          {Array.from({ length: pageCount }, (_, i) => i + 1).map((n) => (
+            <button
+              key={n}
+              type="button"
+              className={pageClass(n === page)}
+              aria-current={n === page ? 'page' : undefined}
+              onClick={() => goToPage(n)}
+            >
+              {n}
+            </button>
+          ))}
+          <button type="button" className={pageClass(false)} disabled={page === pageCount} onClick={() => goToPage(page + 1)} aria-label={t.projects.next}>
+            <ArrowRight size={14} strokeWidth={1.5} />
+          </button>
+        </nav>
+      )}
     </div>
   )
 }

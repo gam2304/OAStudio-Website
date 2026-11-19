@@ -12,7 +12,7 @@ export default function About() {
     <div className="pt-40">
       <section className="page-x mx-auto max-w-[1440px]">
         <Reveal className="max-w-4xl">
-          <p className="label-caps mb-6 text-gold">{t.aboutPage.theStudio}</p>
+          <p className="label-caps mb-6 text-ink/50">{t.aboutPage.theStudio}</p>
           <h1 className="display-xl mb-10">{about.headline}</h1>
           <p className="body-lg max-w-2xl text-ink/70">{about.presentation}</p>
         </Reveal>
@@ -23,7 +23,7 @@ export default function About() {
           <img src={site.founder.photoUrl} alt={site.founder.name} loading="lazy" className="aspect-[3/4] w-full object-cover grayscale" />
         </Reveal>
         <Reveal className="md:order-1 md:col-span-6">
-          <p className="label-caps mb-6 text-gold">{t.aboutPage.founder}</p>
+          <p className="label-caps mb-6 text-ink/50">{t.aboutPage.founder}</p>
           <h2 className="headline-lg">{site.founder.name}</h2>
           <p className="label-caps mb-10 mt-3 text-ink/50">{t.aboutPage.founderRole}</p>
           <p className="body-lg text-ink/70">{t.aboutPage.founderBio}</p>
@@ -47,11 +47,11 @@ export default function About() {
         </Reveal>
         <div className="space-y-16 md:col-span-6 md:col-start-7">
           <Reveal>
-            <h2 className="label-caps mb-4 text-gold">{t.aboutPage.history}</h2>
+            <h2 className="label-caps mb-4 text-ink/50">{t.aboutPage.history}</h2>
             <p className="body-lg text-ink/70">{about.history}</p>
           </Reveal>
           <Reveal>
-            <h2 className="label-caps mb-4 text-gold">{t.aboutPage.philosophy}</h2>
+            <h2 className="label-caps mb-4 text-ink/50">{t.aboutPage.philosophy}</h2>
             <p className="headline-md italic">{about.philosophy}</p>
           </Reveal>
         </div>
@@ -60,13 +60,13 @@ export default function About() {
       <section className="mt-section bg-void py-24 md:py-section">
         <div className="page-x mx-auto max-w-[1440px]">
           <Reveal className="mb-16">
-            <p className="label-caps mb-4 text-gold">{t.aboutPage.approach}</p>
+            <p className="label-caps mb-4 text-ink/50">{t.aboutPage.approach}</p>
             <h2 className="headline-lg">{t.aboutPage.howWeWork}</h2>
           </Reveal>
           <div className="grid gap-12 md:grid-cols-3">
             {about.approach.map((a, i) => (
               <Reveal key={a.title} delay={i * 0.1} className="border-t border-stone/20 pt-8">
-                <p className="mb-4 font-display text-3xl italic text-ink/30">{String(i + 1).padStart(2, '0')}</p>
+                <p className="mb-4 font-display text-3xl tabular-nums text-ink/30">{String(i + 1).padStart(2, '0')}</p>
                 <h3 className="label-caps mb-4">{a.title}</h3>
                 <p className="text-ink/60">{a.text}</p>
               </Reveal>
@@ -77,7 +77,7 @@ export default function About() {
 
       <section className="page-x mx-auto mt-section max-w-[1440px]">
         <Reveal className="mb-16">
-          <p className="label-caps mb-4 text-gold">{t.aboutPage.expertise}</p>
+          <p className="label-caps mb-4 text-ink/50">{t.aboutPage.expertise}</p>
           <h2 className="headline-lg">{t.aboutPage.services}</h2>
         </Reveal>
         <div className="grid gap-x-gutter gap-y-12 md:grid-cols-2">
@@ -93,7 +93,7 @@ export default function About() {
       {!!about.team.length && (
         <section className="page-x mx-auto mt-section max-w-[1440px]">
           <Reveal className="mb-16">
-            <p className="label-caps mb-4 text-gold">{t.aboutPage.people}</p>
+            <p className="label-caps mb-4 text-ink/50">{t.aboutPage.people}</p>
             <h2 className="headline-lg">{t.aboutPage.team}</h2>
           </Reveal>
           <div className="grid gap-gutter sm:grid-cols-2 lg:grid-cols-4">

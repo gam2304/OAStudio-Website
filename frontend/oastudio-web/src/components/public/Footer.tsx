@@ -10,7 +10,7 @@ export function Footer() {
   const { t } = useLang()
   return (
     <footer className="page-x border-t border-stone/10 bg-void pb-12 pt-24">
-      <p className="font-display text-5xl uppercase tracking-tight text-ink/10 md:text-8xl">{site.name}</p>
+      <p className="font-display text-5xl tracking-tight text-ink/10 md:text-8xl">{site.name}</p>
 
       <div className="mt-16 grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
         <div>
@@ -48,7 +48,7 @@ export function Footer() {
             href={`https://wa.me/${site.contact.whatsapp}`}
             target="_blank"
             rel="noreferrer"
-            className="label-caps mt-8 inline-flex items-center gap-3 border border-transparent bg-paper px-8 py-4 text-void transition-colors duration-500 hover:border-bronze hover:text-bronze"
+            className="label-caps mt-8 inline-flex items-center gap-3 border border-transparent bg-paper px-8 py-4 text-void press hover:border-bronze hover:text-bronze"
           >
             <MessageCircle size={16} strokeWidth={1.5} aria-hidden />
             {t.footer.whatsapp}

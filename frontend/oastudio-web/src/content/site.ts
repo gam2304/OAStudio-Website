@@ -15,11 +15,13 @@ export const site = {
     photoUrl: '/founder-placeholder.svg',
   },
   images: {
-    heroFallback: cloudinary('v1794966558/oastudio/projects/duo-residences/3.jpg', 2400), // DUO Residences at dusk
+    // DUO Residences at dusk; crop drops the logo (top left) and signature (bottom right)
+    heroFallback: cloudinary('v1794966558/oastudio/projects/duo-residences/3.jpg', 2400, 'c_crop,w_0.92,h_0.9,g_north_east/'),
     studio: cloudinary('v1794966607/oastudio/projects/villa-moonlight/5.jpg', 1400), // Villa Moonlight living room
     // Villa Oikos arches; crop drops the top band (logo) and right edge (signature)
-    aboutPortrait: cloudinary('v1794966613/oastudio/projects/villa-oikos/1.jpg', 1000, 'c_crop,w_0.75,h_0.8,g_south_west/c_fill,ar_3:4/'),
-    adminLogin: cloudinary('v1794966595/oastudio/projects/villa-lumiere/1.jpg', 2400), // Villa Lumière at night
+    aboutPortrait: cloudinary('v1794966613/oastudio/projects/villa-oikos/1.jpg', 1000, 'c_crop,w_0.75,h_0.7,g_south_west/c_fill,ar_3:4/'),
+    // Villa Lumière at night; crop drops the top band (signature left, logo right)
+    adminLogin: cloudinary('v1794966595/oastudio/projects/villa-lumiere/1.jpg', 2400, 'c_crop,h_0.85,g_south/'),
   },
 
   contact: {

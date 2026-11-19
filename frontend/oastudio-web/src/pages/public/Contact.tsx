@@ -76,7 +76,7 @@ export default function Contact() {
   return (
     <div className="page-x mx-auto max-w-[1440px] pb-section pt-40">
       <Reveal className="mb-24 max-w-3xl">
-        <p className="label-caps mb-6 text-gold">{t.contact.inquire}</p>
+        <p className="label-caps mb-6 text-ink/50">{t.contact.inquire}</p>
         <h1 className="display-xl mb-8">{t.contact.title}</h1>
         <p className="body-lg text-ink/60">{t.contact.intro}</p>
       </Reveal>
@@ -112,23 +112,27 @@ export default function Contact() {
             {field('message', t.contact.message, { textarea: true })}
 
             <div aria-live="polite">
-              {status === 'sent' && <p className="text-gold">{t.contact.sent}</p>}
-              {status === 'error' && <p role="alert" className="text-error">{serverError}</p>}
+              {status === 'sent' && <p className="fade-in text-gold">{t.contact.sent}</p>}
+              {status === 'error' && <p role="alert" className="fade-in text-error">{serverError}</p>}
             </div>
 
             <button
               type="submit"
               disabled={status === 'sending'}
-              className="label-caps border border-transparent bg-paper px-10 py-4 text-void transition-colors duration-500 hover:border-bronze hover:text-bronze disabled:opacity-50"
+              className="label-caps border border-transparent bg-paper px-10 py-4 text-void press hover:border-bronze hover:text-bronze disabled:opacity-50"
             >
-              {status === 'sending' ? t.contact.sending : t.contact.send}
+              {/* Both labels share one grid cell so the button keeps its width while sending */}
+              <span className="grid">
+                <span className={`col-start-1 row-start-1 ${status === 'sending' ? 'invisible' : ''}`}>{t.contact.send}</span>
+                <span className={`col-start-1 row-start-1 ${status === 'sending' ? '' : 'invisible'}`}>{t.contact.sending}</span>
+              </span>
             </button>
           </form>
         </Reveal>
 
         <Reveal className="space-y-12 lg:col-span-4 lg:col-start-9" delay={0.1}>
           <div>
-            <h2 className="label-caps mb-4 text-gold">{t.contact.office}</h2>
+            <h2 className="label-caps mb-4 text-ink/50">{t.contact.office}</h2>
             <address className="space-y-2 not-italic text-ink/70">
               <p>{contact.address}</p>
               <p><a href={`tel:${contact.tel}`} className="hover:text-bronze">{contact.phone}</a></p>
@@ -136,14 +140,14 @@ export default function Contact() {
             </address>
           </div>
           <div>
-            <h2 className="label-caps mb-4 text-gold">{t.contact.hoursLabel}</h2>
+            <h2 className="label-caps mb-4 text-ink/50">{t.contact.hoursLabel}</h2>
             <ul className="space-y-2 text-ink/70">
               {t.contact.hours.map((h) => <li key={h}>{h}</li>)}
             </ul>
           </div>
           {social.some((s) => s.href) && (
             <div>
-              <h2 className="label-caps mb-4 text-gold">{t.contact.follow}</h2>
+              <h2 className="label-caps mb-4 text-ink/50">{t.contact.follow}</h2>
               <ul className="space-y-2 text-ink/70">
                 {social.filter((s) => s.href).map((s) => (
                   <li key={s.label}>

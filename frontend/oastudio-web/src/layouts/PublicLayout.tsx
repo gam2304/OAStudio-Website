@@ -27,7 +27,7 @@ export default function PublicLayout() {
         className="flex-1"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.2, ease: 'easeOut' }}
       >
         <Outlet />
       </motion.main>
