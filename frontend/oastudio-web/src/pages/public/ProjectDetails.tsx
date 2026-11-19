@@ -4,6 +4,7 @@ import { Link, useParams } from 'react-router-dom'
 import { Reveal } from '../../components/common/Reveal'
 import { ErrorState, Loading } from '../../components/common/Status'
 import { useApi } from '../../hooks/useApi'
+import { useLang } from '../../i18n/LanguageContext'
 import { getProject, getProjectImages, getProjects } from '../../services/publicApi'
 import { site } from '../../content/site'
 import NotFound from './NotFound'
@@ -14,6 +15,7 @@ export default function ProjectDetails() {
   const project = useApi(() => getProject(slug), [slug])
   const images = useApi(() => getProjectImages(slug), [slug])
   const all = useApi(getProjects)
+  const { t } = useLang()
 
   const p = project.data
   useEffect(() => {
@@ -23,9 +25,9 @@ export default function ProjectDetails() {
     }
   }, [p])
 
-  if (project.loading) return <div className="pt-40"><Loading /></div>
+  if (project.loading) return <div className="pt-40"><Loading label={t.status.loading} /></div>
   if (axios.isAxiosError(project.error) && project.error.response?.status === 404) return <NotFound />
-  if (project.error || !p) return <div className="pt-40"><ErrorState error={project.error} /></div>
+  if (project.error || !p) return <div className="pt-40"><ErrorState error={project.error} fallback={t.status.error} /></div>
 
   const list = all.data ?? []
   const index = list.findIndex((x) => x.slug === p.slug)
@@ -33,10 +35,10 @@ export default function ProjectDetails() {
   const next = index >= 0 && index < list.length - 1 ? list[index + 1] : null
 
   const facts = [
-    ['Location', p.location],
-    ['Year', p.year],
-    ['Category', p.category?.categoryName],
-    ['Area', p.area ? `${p.area} m²` : null],
+    [t.project.location, p.location],
+    [t.project.year, p.year],
+    [t.project.category, p.category?.categoryName],
+    [t.project.area, p.area ? `${p.area} m²` : null],
   ].filter(([, v]) => v != null && v !== '')
 
   return (
@@ -66,7 +68,7 @@ export default function ProjectDetails() {
           </dl>
         </Reveal>
         <Reveal className="md:col-span-7 md:col-start-6" delay={0.1}>
-          <h2 className="label-caps mb-6 text-gold">The Narrative</h2>
+          <h2 className="label-caps mb-6 text-gold">{t.project.narrative}</h2>
           {p.description && <p className="body-lg whitespace-pre-line text-ink/80">{p.description}</p>}
         </Reveal>
       </section>
@@ -75,7 +77,7 @@ export default function ProjectDetails() {
       {p.architecturalConcept && (
         <section className="page-x mx-auto mt-section max-w-[1440px]">
           <Reveal className="mx-auto max-w-4xl text-center">
-            <h2 className="label-caps mb-8 text-gold">Architectural Concept</h2>
+            <h2 className="label-caps mb-8 text-gold">{t.project.concept}</h2>
             <p className="headline-lg whitespace-pre-line italic">{p.architecturalConcept}</p>
           </Reveal>
         </section>
@@ -83,13 +85,13 @@ export default function ProjectDetails() {
 
       {/* Gallery */}
       {!!images.data?.length && (
-        <section className="page-x mx-auto mt-section max-w-[1440px]" aria-label="Gallery">
+        <section className="page-x mx-auto mt-section max-w-[1440px]" aria-label={t.project.gallery}>
           <div className="grid gap-gutter md:grid-cols-2">
             {images.data.map((img, i) => (
               <Reveal key={img.id} className={i % 3 === 0 ? 'md:col-span-2' : ''}>
                 <img
                   src={img.imageUrl}
-                  alt={img.altText ?? `${p.title} — image ${i + 1}`}
+                  alt={img.altText ?? `${p.title} — ${t.project.image} ${i + 1}`}
                   loading="lazy"
                   className={`w-full object-cover ${i % 3 === 0 ? 'aspect-[16/9]' : 'aspect-[4/5]'}`}
                 />
@@ -100,23 +102,23 @@ export default function ProjectDetails() {
       )}
 
       {/* Prev / next */}
-      <nav aria-label="More projects" className="page-x mx-auto my-section flex max-w-[1440px] justify-between gap-8 border-t border-stone/20 pt-12">
+      <nav aria-label={t.project.more} className="page-x mx-auto my-section flex max-w-[1440px] justify-between gap-8 border-t border-stone/20 pt-12">
         {prev ? (
           <Link to={`/projects/${prev.slug}`} className="group max-w-[45%]">
             <span className="label-caps mb-3 flex items-center gap-2 text-ink/40 group-hover:text-bronze">
-              <ArrowLeft size={14} /> Previous
+              <ArrowLeft size={14} /> {t.project.previous}
             </span>
             <span className="font-display text-xl md:text-3xl">{prev.title}</span>
           </Link>
         ) : (
           <Link to="/projects" className="label-caps flex items-center gap-2 text-ink/40 hover:text-bronze">
-            <ArrowLeft size={14} /> All projects
+            <ArrowLeft size={14} /> {t.project.all}
           </Link>
         )}
         {next && (
           <Link to={`/projects/${next.slug}`} className="group max-w-[45%] text-right">
             <span className="label-caps mb-3 flex items-center justify-end gap-2 text-ink/40 group-hover:text-bronze">
-              Next <ArrowRight size={14} />
+              {t.project.next} <ArrowRight size={14} />
             </span>
             <span className="font-display text-xl md:text-3xl">{next.title}</span>
           </Link>

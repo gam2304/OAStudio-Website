@@ -1,8 +1,10 @@
 import { useState, type FormEvent } from 'react'
 import { Reveal } from '../../components/common/Reveal'
+import { OfficeMap } from '../../components/public/OfficeMap'
 import { site } from '../../content/site'
 import { errorMessage } from '../../services/api'
 import { sendContactMessage } from '../../services/publicApi'
+import { useLang } from '../../i18n/LanguageContext'
 import type { ContactMessageRequest } from '../../types'
 import { validateContact, type ContactErrors } from '../../utils/validateContact'
 
@@ -13,13 +15,14 @@ export default function Contact() {
   const [errors, setErrors] = useState<ContactErrors>({})
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
   const [serverError, setServerError] = useState('')
+  const { t } = useLang()
 
   const set = (k: keyof ContactMessageRequest) => (e: { target: { value: string } }) =>
     setForm((f) => ({ ...f, [k]: e.target.value }))
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault()
-    const found = validateContact(form)
+    const found = validateContact(form, t.contact.errors)
     setErrors(found)
     if (Object.keys(found).length) return
     setStatus('sending')
@@ -28,7 +31,7 @@ export default function Contact() {
       setForm(empty)
       setStatus('sent')
     } catch (err) {
-      setServerError(errorMessage(err, 'Your message could not be sent. Please try again.'))
+      setServerError(errorMessage(err, t.contact.sendError))
       setStatus('error')
     }
   }
@@ -37,7 +40,7 @@ export default function Contact() {
     <div>
       <label htmlFor={k} className="label-caps mb-3 block text-ink/60">
         {label}
-        {opts.optional && <span className="ml-2 normal-case tracking-normal text-ink/30">(optional)</span>}
+        {opts.optional && <span className="ml-2 normal-case tracking-normal text-ink/30">{t.contact.optional}</span>}
       </label>
       {opts.textarea ? (
         <textarea
@@ -73,23 +76,23 @@ export default function Contact() {
   return (
     <div className="page-x mx-auto max-w-[1440px] pb-section pt-40">
       <Reveal className="mb-24 max-w-3xl">
-        <p className="label-caps mb-6 text-gold">Inquire</p>
-        <h1 className="display-xl mb-8">Begin the conversation.</h1>
-        <p className="body-lg text-ink/60">Tell us about your site, your programme and your ambitions. We reply to every inquiry.</p>
+        <p className="label-caps mb-6 text-gold">{t.contact.inquire}</p>
+        <h1 className="display-xl mb-8">{t.contact.title}</h1>
+        <p className="body-lg text-ink/60">{t.contact.intro}</p>
       </Reveal>
 
       <div className="grid gap-24 lg:grid-cols-12">
         <Reveal className="lg:col-span-7">
           <form noValidate onSubmit={onSubmit} className="space-y-10">
             <div className="grid gap-10 md:grid-cols-2">
-              {field('senderName', 'Name')}
-              {field('senderEmail', 'Email', { type: 'email' })}
+              {field('senderName', t.contact.name)}
+              {field('senderEmail', t.contact.email, { type: 'email' })}
             </div>
-            {field('subject', 'Subject', { optional: true })}
-            {field('message', 'Message', { textarea: true })}
+            {field('subject', t.contact.subject, { optional: true })}
+            {field('message', t.contact.message, { textarea: true })}
 
             <div aria-live="polite">
-              {status === 'sent' && <p className="text-gold">Thank you. Your message has been received — we will be in touch shortly.</p>}
+              {status === 'sent' && <p className="text-gold">{t.contact.sent}</p>}
               {status === 'error' && <p role="alert" className="text-error">{serverError}</p>}
             </div>
 
@@ -98,14 +101,14 @@ export default function Contact() {
               disabled={status === 'sending'}
               className="label-caps border border-transparent bg-paper px-10 py-4 text-void transition-colors duration-500 hover:border-bronze hover:text-bronze disabled:opacity-50"
             >
-              {status === 'sending' ? 'Sending…' : 'Send message'}
+              {status === 'sending' ? t.contact.sending : t.contact.send}
             </button>
           </form>
         </Reveal>
 
         <Reveal className="space-y-12 lg:col-span-4 lg:col-start-9" delay={0.1}>
           <div>
-            <h2 className="label-caps mb-4 text-gold">Office</h2>
+            <h2 className="label-caps mb-4 text-gold">{t.contact.office}</h2>
             <address className="space-y-2 not-italic text-ink/70">
               <p>{contact.address}</p>
               <p>{contact.phone}</p>
@@ -114,7 +117,7 @@ export default function Contact() {
           </div>
           {social.some((s) => s.href) && (
             <div>
-              <h2 className="label-caps mb-4 text-gold">Follow</h2>
+              <h2 className="label-caps mb-4 text-gold">{t.contact.follow}</h2>
               <ul className="space-y-2 text-ink/70">
                 {social.filter((s) => s.href).map((s) => (
                   <li key={s.label}>
@@ -127,17 +130,7 @@ export default function Contact() {
         </Reveal>
       </div>
 
-      {contact.mapEmbedUrl && (
-        <Reveal className="mt-section">
-          <iframe
-            title="Office location"
-            src={contact.mapEmbedUrl}
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            className="aspect-[21/9] w-full border border-stone/20 grayscale invert-[0.9]"
-          />
-        </Reveal>
-      )}
+      <OfficeMap className="mt-section" />
     </div>
   )
 }

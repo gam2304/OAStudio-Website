@@ -2,10 +2,13 @@ import { motion } from 'framer-motion'
 import { useEffect } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import { Footer } from '../components/public/Footer'
+import { LanguagePrompt } from '../components/public/LanguagePrompt'
 import { Navbar } from '../components/public/Navbar'
+import { useLang } from '../i18n/LanguageContext'
 
 export default function PublicLayout() {
   const { pathname } = useLocation()
+  const { t } = useLang()
 
   // Braces matter: scrollTo can return a Promise, which React would treat as a cleanup
   useEffect(() => {
@@ -15,7 +18,7 @@ export default function PublicLayout() {
   return (
     <div className="flex min-h-screen flex-col">
       <a href="#main" className="label-caps sr-only z-[60] bg-paper p-4 text-void focus:not-sr-only focus:fixed focus:left-4 focus:top-4">
-        Skip to content
+        {t.nav.skip}
       </a>
       <Navbar />
       <motion.main
@@ -29,6 +32,7 @@ export default function PublicLayout() {
         <Outlet />
       </motion.main>
       <Footer />
+      <LanguagePrompt />
     </div>
   )
 }

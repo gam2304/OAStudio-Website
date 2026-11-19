@@ -3,18 +3,19 @@ import { Menu, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { site } from '../../content/site'
-
-const links = [
-  { to: '/', label: 'Home' },
-  { to: '/projects', label: 'Projects' },
-  { to: '/about', label: 'Studio' },
-  { to: '/contact', label: 'Contact' },
-]
+import { useLang } from '../../i18n/LanguageContext'
 
 export function Navbar() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const close = () => setOpen(false)
+  const { lang, t, setLang } = useLang()
+  const links = [
+    { to: '/', label: t.nav.home },
+    { to: '/projects', label: t.nav.projects },
+    { to: '/about', label: t.nav.studio },
+    { to: '/contact', label: t.nav.contact },
+  ]
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
@@ -41,7 +42,7 @@ export function Navbar() {
           scrolled && !open ? 'bg-void py-5' : 'bg-transparent py-8'
         }`}
       >
-        <Link to="/" onClick={close} className="flex items-center gap-3" aria-label={`${site.name} home`}>
+        <Link to="/" onClick={close} className="flex items-center gap-3" aria-label={`${site.name} ${t.nav.homeLink}`}>
           <img src="/logo.png" alt="" className="h-8 w-8 invert" />
           <span className="font-display text-xl font-bold tracking-tighter md:text-2xl">{site.name}</span>
         </Link>
@@ -52,14 +53,22 @@ export function Navbar() {
             onClick={close}
             className="label-caps hidden border border-transparent bg-paper px-8 py-3 text-void transition-colors duration-500 hover:border-bronze hover:text-bronze sm:inline-block"
           >
-            Consultation
+            {t.nav.consultation}
           </Link>
+          <button
+            type="button"
+            onClick={() => setLang(lang === 'en' ? 'fr' : 'en')}
+            aria-label={t.nav.switchLang}
+            className="label-caps p-2 transition-colors hover:text-bronze"
+          >
+            {lang === 'en' ? 'FR' : 'EN'}
+          </button>
           <button
             type="button"
             onClick={() => setOpen((o) => !o)}
             aria-expanded={open}
             aria-controls="site-menu"
-            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-label={open ? t.nav.closeMenu : t.nav.openMenu}
             className="p-2 transition-colors hover:text-bronze"
           >
             {open ? <X strokeWidth={1.25} /> : <Menu strokeWidth={1.25} />}
@@ -71,7 +80,7 @@ export function Navbar() {
         {open && (
           <motion.nav
             id="site-menu"
-            aria-label="Main"
+            aria-label={t.nav.main}
             className="page-x fixed inset-0 z-40 flex flex-col justify-center bg-void"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

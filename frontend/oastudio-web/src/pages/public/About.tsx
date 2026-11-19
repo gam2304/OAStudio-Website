@@ -1,13 +1,16 @@
 import { Reveal } from '../../components/common/Reveal'
+import { OfficeMap } from '../../components/public/OfficeMap'
 import { site } from '../../content/site'
+import { useLang } from '../../i18n/LanguageContext'
 
 export default function About() {
-  const { about, services } = site
+  const { t } = useLang()
+  const { about, services } = t
   return (
     <div className="pt-40">
       <section className="page-x mx-auto max-w-[1440px]">
         <Reveal className="max-w-4xl">
-          <p className="label-caps mb-6 text-gold">The Studio</p>
+          <p className="label-caps mb-6 text-gold">{t.aboutPage.theStudio}</p>
           <h1 className="display-xl mb-10">{about.headline}</h1>
           <p className="body-lg max-w-2xl text-ink/70">{about.presentation}</p>
         </Reveal>
@@ -15,15 +18,15 @@ export default function About() {
 
       <section className="page-x mx-auto mt-section grid max-w-[1440px] items-center gap-16 md:grid-cols-12">
         <Reveal className="md:col-span-5">
-          <img src={site.images.aboutPortrait} alt="Arched stone facade of Villa Oikos framed by palms" loading="lazy" className="aspect-[3/4] w-full object-cover grayscale" />
+          <img src={site.images.aboutPortrait} alt={t.aboutPage.portraitAlt} loading="lazy" className="aspect-[3/4] w-full object-cover grayscale" />
         </Reveal>
         <div className="space-y-16 md:col-span-6 md:col-start-7">
           <Reveal>
-            <h2 className="label-caps mb-4 text-gold">History</h2>
+            <h2 className="label-caps mb-4 text-gold">{t.aboutPage.history}</h2>
             <p className="body-lg text-ink/70">{about.history}</p>
           </Reveal>
           <Reveal>
-            <h2 className="label-caps mb-4 text-gold">Philosophy</h2>
+            <h2 className="label-caps mb-4 text-gold">{t.aboutPage.philosophy}</h2>
             <p className="headline-md italic">{about.philosophy}</p>
           </Reveal>
         </div>
@@ -32,8 +35,8 @@ export default function About() {
       <section className="mt-section bg-void py-24 md:py-section">
         <div className="page-x mx-auto max-w-[1440px]">
           <Reveal className="mb-16">
-            <p className="label-caps mb-4 text-gold">Design Approach</p>
-            <h2 className="headline-lg">How we work</h2>
+            <p className="label-caps mb-4 text-gold">{t.aboutPage.approach}</p>
+            <h2 className="headline-lg">{t.aboutPage.howWeWork}</h2>
           </Reveal>
           <div className="grid gap-12 md:grid-cols-3">
             {about.approach.map((a, i) => (
@@ -49,8 +52,8 @@ export default function About() {
 
       <section className="page-x mx-auto mt-section max-w-[1440px]">
         <Reveal className="mb-16">
-          <p className="label-caps mb-4 text-gold">Expertise</p>
-          <h2 className="headline-lg">Services</h2>
+          <p className="label-caps mb-4 text-gold">{t.aboutPage.expertise}</p>
+          <h2 className="headline-lg">{t.aboutPage.services}</h2>
         </Reveal>
         <div className="grid gap-x-gutter gap-y-12 md:grid-cols-2">
           {services.map((s) => (
@@ -65,8 +68,8 @@ export default function About() {
       {!!about.team.length && (
         <section className="page-x mx-auto mt-section max-w-[1440px]">
           <Reveal className="mb-16">
-            <p className="label-caps mb-4 text-gold">People</p>
-            <h2 className="headline-lg">Team</h2>
+            <p className="label-caps mb-4 text-gold">{t.aboutPage.people}</p>
+            <h2 className="headline-lg">{t.aboutPage.team}</h2>
           </Reveal>
           <div className="grid gap-gutter sm:grid-cols-2 lg:grid-cols-4">
             {about.team.map((m) => (
@@ -80,7 +83,9 @@ export default function About() {
         </section>
       )}
 
-      <div className="h-section" />
+      <section className="page-x mx-auto my-section max-w-[1440px]">
+        <OfficeMap />
+      </section>
     </div>
   )
 }
