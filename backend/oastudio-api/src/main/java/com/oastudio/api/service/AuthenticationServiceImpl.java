@@ -2,6 +2,7 @@ package com.oastudio.api.service;
 
 import com.oastudio.api.dto.request.AdminRequest;
 import com.oastudio.api.dto.response.AuthResponse;
+import com.oastudio.api.security.LoginAttemptService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.jwt.JwsHeader;
 import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
@@ -26,6 +28,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final AuthenticationManager authenticationManager;
     private final JwtEncoder jwtEncoder;
+    private final LoginAttemptService loginAttemptService;
 
     @Value("${app.security.jwt.issuer}")
     private String issuer;
@@ -36,13 +39,23 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public AuthResponse login(AdminRequest request) {
 
+        loginAttemptService.checkNotLocked(request.username());
+
         // Authenticate administrator credentials
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.username(),
-                        request.password()
-                )
-        );
+        Authentication authentication;
+        try {
+            authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            request.username(),
+                            request.password()
+                    )
+            );
+        } catch (AuthenticationException exception) {
+            loginAttemptService.recordFailure(request.username());
+            throw exception;
+        }
+
+        loginAttemptService.recordSuccess(request.username());
 
         // Define token timestamps
         Instant now = Instant.now();

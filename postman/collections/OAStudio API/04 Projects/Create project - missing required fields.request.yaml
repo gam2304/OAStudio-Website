@@ -1,0 +1,24 @@
+$kind: http-request
+url: "{{baseUrl}}/api/admin/projects"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "location": "Nowhere"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status is 400", () => pm.response.to.have.status(400));
+      pm.test("Validation messages name the bad fields", () => {
+          const m = pm.response.json().messages;
+          pm.expect(m, "messages.title").to.have.property("title");
+          pm.expect(m, "messages.slug").to.have.property("slug");
+          pm.expect(m, "messages.status").to.have.property("status");
+          pm.expect(m, "messages.categoryId").to.have.property("categoryId");
+      });
+    language: text/javascript
+order: 2000

@@ -1,0 +1,30 @@
+$kind: http-request
+url: "{{baseUrl}}/api/auth/login"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "username": "tmpadmin{{runId}}",
+      "password": "wrong"
+    }
+auth:
+  type: noauth
+scripts:
+  - type: beforeRequest
+    code: |-
+      // 5 wrong passwords lock the account for 15 minutes; this request is the 6th try
+      const body = JSON.stringify({ username: "tmpadmin" + pm.collectionVariables.get("runId"), password: "wrong" });
+      for (let i = 0; i < 5; i++) {
+          pm.sendRequest({ url: pm.collectionVariables.get("baseUrl") + "/api/auth/login", method: "POST",
+              header: { "Content-Type": "application/json" }, body: { mode: "raw", raw: body } }, () => {});
+      }
+    language: text/javascript
+  - type: afterResponse
+    code: |-
+      pm.test("Status is 429", () => pm.response.to.have.status(429));
+      pm.test("Error body has status 429", () => pm.expect(pm.response.json().status).to.eql(429));
+    language: text/javascript
+order: 16000

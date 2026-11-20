@@ -3,6 +3,7 @@ package com.oastudio.api.service;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.oastudio.api.exception.InvalidRequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,13 +27,17 @@ public class CloudinaryService {
     );
 
     public Map uploadImage(MultipartFile file, Long projectId) throws IOException {
+        return uploadImage(file, "oastudio/projects/" + projectId);
+    }
+
+    public Map uploadImage(MultipartFile file, String folder) throws IOException {
 
         validateImage(file);
 
         return cloudinary.uploader().upload(
                 file.getBytes(),
                 ObjectUtils.asMap(
-                        "folder", "oastudio/projects/" + projectId,
+                        "folder", folder,
                         "resource_type", "image"
                 )
         );
@@ -53,11 +58,11 @@ public class CloudinaryService {
     private void validateImage(MultipartFile file) {
 
         if (file == null || file.isEmpty()) {
-            throw new IllegalArgumentException("Image file cannot be empty");
+            throw new InvalidRequestException("Image file cannot be empty");
         }
 
         if (file.getSize() > MAX_FILE_SIZE) {
-            throw new IllegalArgumentException(
+            throw new InvalidRequestException(
                     "Image size must not exceed 10 MB"
             );
         }
@@ -67,7 +72,7 @@ public class CloudinaryService {
         if (contentType == null ||
                 !ALLOWED_CONTENT_TYPES.contains(contentType.toLowerCase())) {
 
-            throw new IllegalArgumentException(
+            throw new InvalidRequestException(
                     "Only JPG, PNG and WebP images are allowed"
             );
         }

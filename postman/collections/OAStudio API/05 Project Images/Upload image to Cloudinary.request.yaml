@@ -1,0 +1,26 @@
+$kind: http-request
+url: "{{baseUrl}}/api/admin/projects/{{projectId}}/images/upload"
+method: POST
+body:
+  type: formdata
+  content:
+    - type: file
+      key: file
+      src:
+        - postman/fixtures/test-image.png
+    - type: text
+      key: altText
+      value: Uploaded {{runId}}
+    - type: text
+      key: displayOrder
+      value: "2"
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status is 201", () => pm.response.to.have.status(201));
+
+      const i = pm.response.json();
+      pm.test("Stored on Cloudinary", () => pm.expect(i.imageUrl).to.match(/^https:\/\/res\.cloudinary\.com\//));
+      pm.collectionVariables.set("uploadedImageId", i.id);
+    language: text/javascript
+order: 10000

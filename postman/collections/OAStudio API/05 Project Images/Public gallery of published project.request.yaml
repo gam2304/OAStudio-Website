@@ -1,0 +1,12 @@
+$kind: http-request
+url: "{{baseUrl}}/api/public/projects/{{projectSlug}}/images"
+method: GET
+auth:
+  type: noauth
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status is 200", () => pm.response.to.have.status(200));
+      pm.test("Contains added image", () => pm.expect(pm.response.json().map(i => i.id)).to.include(Number(pm.collectionVariables.get("imageId"))));
+    language: text/javascript
+order: 5000

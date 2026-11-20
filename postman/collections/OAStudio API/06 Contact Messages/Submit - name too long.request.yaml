@@ -1,0 +1,26 @@
+$kind: http-request
+url: "{{baseUrl}}/api/contact-messages"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "senderName": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "senderEmail": "tester@example.com",
+      "subject": "Suite run {{runId}}",
+      "message": "Automated test message."
+    }
+auth:
+  type: noauth
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status is 400", () => pm.response.to.have.status(400));
+      pm.test("Validation messages name the bad fields", () => {
+          const m = pm.response.json().messages;
+          pm.expect(m, "messages.senderName").to.have.property("senderName");
+      });
+    language: text/javascript
+order: 4000

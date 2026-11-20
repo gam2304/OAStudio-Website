@@ -1,0 +1,10 @@
+$kind: http-request
+url: "{{baseUrl}}/api/admin/contact-messages/count/new"
+method: GET
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status is 200", () => pm.response.to.have.status(200));
+      pm.test("At least one new message", () => pm.expect(pm.response.json()).to.be.a("number").and.at.least(1));
+    language: text/javascript
+order: 5000

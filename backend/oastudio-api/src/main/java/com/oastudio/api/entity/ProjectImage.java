@@ -2,6 +2,7 @@
 package com.oastudio.api.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
@@ -35,6 +36,7 @@ public class ProjectImage {
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
 
-    @Column(name = "created_at", insertable = false, updatable = false)
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 }

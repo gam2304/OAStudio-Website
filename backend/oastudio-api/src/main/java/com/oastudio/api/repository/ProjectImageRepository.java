@@ -12,6 +12,8 @@ public interface ProjectImageRepository extends JpaRepository<ProjectImage, Long
 
     List<ProjectImage> findByProjectIdOrderByDisplayOrderAsc(Long projectId);
 
+    boolean existsByPublicId(String publicId);
+
     @Modifying(clearAutomatically = true, flushAutomatically = true)
     @Query("DELETE FROM ProjectImage pi WHERE pi.project.id = :projectId")
     void deleteAllByProjectIdInBulk(@Param("projectId") Long projectId);

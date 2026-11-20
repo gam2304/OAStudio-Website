@@ -1,0 +1,28 @@
+$kind: http-request
+url: "{{baseUrl}}/api/admin/categories"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "categoryName": "Test Category {{runId}}",
+      "slug": "test-category-{{runId}}",
+      "description": "Created by the Postman suite"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status is 201", () => pm.response.to.have.status(201));
+
+      const c = pm.response.json();
+      pm.test("Category echoes input", () => {
+          pm.expect(c.id).to.be.a("number");
+          pm.expect(c.categoryName).to.eql("Test Category " + pm.collectionVariables.get("runId"));
+          pm.expect(c.slug).to.eql("test-category-" + pm.collectionVariables.get("runId"));
+      });
+      pm.collectionVariables.set("categoryId", c.id);
+      pm.collectionVariables.set("categorySlug", c.slug);
+    language: text/javascript
+order: 1000

@@ -40,7 +40,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Transactional(readOnly = true)
     public List<ProjectResponse> getPublishedProjects() {
 
-        return projectRepository.findByStatus(ProjectStatus.PUBLISHED)
+        return projectRepository.findByStatusOrderByCreatedAtDescIdDesc(ProjectStatus.PUBLISHED)
                 .stream()
                 .map(this::mapToResponse)
                 .toList();
@@ -210,7 +210,7 @@ public class ProjectServiceImpl implements ProjectService {
                 Project updatedProject = projectRepository.saveAndFlush(project);
 
                 // Delete old cover only after the new cover is saved
-                if (oldPublicId != null && !oldPublicId.isBlank()) {
+                if (isUnusedCoverAsset(oldPublicId)) {
                     try {
                         cloudinaryService.deleteImage(oldPublicId);
                     } catch (IOException cleanupException) {
@@ -251,7 +251,7 @@ public class ProjectServiceImpl implements ProjectService {
 
         String publicId = project.getCoverPublicId();
 
-        if (publicId != null && !publicId.isBlank()) {
+        if (isUnusedCoverAsset(publicId)) {
             try {
                 cloudinaryService.deleteImage(publicId);
             } catch (IOException exception) {
@@ -266,6 +266,46 @@ public class ProjectServiceImpl implements ProjectService {
         project.setCoverPublicId(null);
 
         projectRepository.save(project);
+    }
+
+    @Override
+    public ProjectResponse setCoverFromGallery(Long projectId, Long imageId) {
+
+        Project project = findProjectById(projectId);
+
+        ProjectImage image = projectImageRepository.findById(imageId)
+                .filter(i -> i.getProject().getId().equals(projectId))
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Image " + imageId + " not found in project " + projectId));
+
+        String oldPublicId = project.getCoverPublicId();
+
+        // Cover and gallery image now share one Cloudinary asset.
+        project.setCoverImageUrl(image.getImageUrl());
+        project.setCoverPublicId(image.getPublicId());
+
+        Project updatedProject = projectRepository.saveAndFlush(project);
+
+        // Old cover was a separate upload: remove it so it is not orphaned.
+        if (isUnusedCoverAsset(oldPublicId)) {
+            try {
+                cloudinaryService.deleteImage(oldPublicId);
+            } catch (IOException exception) {
+                throw new RuntimeException(
+                        "New cover saved, but the previous cover could not be deleted",
+                        exception
+                );
+            }
+        }
+
+        return mapToResponse(updatedProject);
+    }
+
+    // A cover asset may also be a gallery image (seed data, or chosen from the gallery).
+    private boolean isUnusedCoverAsset(String publicId) {
+        return publicId != null
+                && !publicId.isBlank()
+                && !projectImageRepository.existsByPublicId(publicId);
     }
 
     @Override
@@ -288,7 +328,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Transactional(readOnly = true)
     public List<ProjectResponse> getProjectsByStatus(ProjectStatus status) {
 
-        return projectRepository.findByStatus(status)
+        return projectRepository.findByStatusOrderByCreatedAtDescIdDesc(status)
                 .stream()
                 .map(this::mapToResponse)
                 .toList();

@@ -88,8 +88,9 @@ public class ProjectImageServiceImpl implements ProjectImageService {
                 );
 
         try {
-            // Delete from Cloudinary first
-            if (image.getPublicId() != null) {
+            // Delete from Cloudinary first, unless a project still uses it as its cover
+            if (image.getPublicId() != null
+                    && !projectRepository.existsByCoverPublicId(image.getPublicId())) {
                 cloudinaryService.deleteImage(image.getPublicId());
             }
 

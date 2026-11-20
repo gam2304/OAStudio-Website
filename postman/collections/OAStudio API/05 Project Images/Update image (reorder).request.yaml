@@ -1,0 +1,20 @@
+$kind: http-request
+url: "{{baseUrl}}/api/admin/project-images/{{imageId}}"
+method: PUT
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "imageUrl": "https://res.cloudinary.com/demo/image/upload/sample.jpg",
+      "altText": "Facade {{runId}}",
+      "displayOrder": 0
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status is 200", () => pm.response.to.have.status(200));
+      pm.test("displayOrder updated", () => pm.expect(pm.response.json().displayOrder).to.eql(0));
+    language: text/javascript
+order: 6000

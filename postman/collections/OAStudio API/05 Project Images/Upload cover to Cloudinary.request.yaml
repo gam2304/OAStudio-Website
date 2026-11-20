@@ -1,0 +1,17 @@
+$kind: http-request
+url: "{{baseUrl}}/api/admin/projects/{{projectId}}/cover"
+method: POST
+body:
+  type: formdata
+  content:
+    - type: file
+      key: file
+      src:
+        - postman/fixtures/test-image.png
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status is 201", () => pm.response.to.have.status(201));
+      pm.test("coverImageUrl set", () => pm.expect(pm.response.json().coverImageUrl).to.match(/^https:\/\/res\.cloudinary\.com\//));
+    language: text/javascript
+order: 13000

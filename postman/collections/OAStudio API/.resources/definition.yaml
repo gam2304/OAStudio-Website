@@ -1,0 +1,75 @@
+$kind: collection
+description: |-
+  End-to-end tests for the OAStudio backend. Run the folders in order: later requests use ids saved by earlier ones, and folder 08 deletes everything the run created.
+
+  Needs environment variables adminUsername and adminPassword. Folder 05 uploads two 8x8 test images to Cloudinary and deletes them again. Folder 07 creates a temporary admin and deletes it; it needs a free slot (max 5 admins).
+variables:
+  - key: baseUrl
+    value: http://localhost:9001
+    disabled: false
+    secret: false
+  - key: runId
+    value: ""
+    disabled: false
+    secret: false
+  - key: accessToken
+    value: ""
+    disabled: false
+    secret: false
+  - key: categoryId
+    value: ""
+    disabled: false
+    secret: false
+  - key: categorySlug
+    value: ""
+    disabled: false
+    secret: false
+  - key: projectId
+    value: ""
+    disabled: false
+    secret: false
+  - key: projectSlug
+    value: ""
+    disabled: false
+    secret: false
+  - key: imageId
+    value: ""
+    disabled: false
+    secret: false
+  - key: uploadedImageId
+    value: ""
+    disabled: false
+    secret: false
+  - key: messageId
+    value: ""
+    disabled: false
+    secret: false
+  - key: superAdminId
+    value: ""
+    disabled: false
+    secret: false
+  - key: tempAdminId
+    value: ""
+    disabled: false
+    secret: false
+  - key: tempToken
+    value: ""
+    disabled: false
+    secret: false
+  - key: bearer_token_070o
+    secret: true
+    disabled: false
+scripts:
+  - type: http:beforeRequest
+    code: |-
+      // One suffix per run keeps names and slugs unique
+      if (!pm.collectionVariables.get("runId") || pm.info.iteration === 0 && pm.info.requestName === "Login - wrong password") {
+          pm.collectionVariables.set("runId", Date.now().toString(36));
+      }
+    language: text/javascript
+auth:
+  - id: 9de207da-2719-4103-87cf-2882736c8234
+    type: bearer
+    name: bearer auth
+    credentials:
+      token: "{{accessToken}}"

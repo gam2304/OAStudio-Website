@@ -2,6 +2,7 @@
 package com.oastudio.api.security;
 
 import com.oastudio.api.entity.Admin;
+import com.oastudio.api.enums.UserRole;
 import com.oastudio.api.repository.AdminRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -33,7 +34,10 @@ public class CustomUserDetailsService implements UserDetailsService {
         return User.builder()
                 .username(admin.getUsername())
                 .password(admin.getPasswordHash())
-                .roles(admin.getRole().name())
+                // SUPER_ADMIN also holds ADMIN so it keeps access to /api/admin/**
+                .roles(admin.getRole() == UserRole.SUPER_ADMIN
+                        ? new String[] {"ADMIN", "SUPER_ADMIN"}
+                        : new String[] {admin.getRole().name()})
                 .build();
     }
 }

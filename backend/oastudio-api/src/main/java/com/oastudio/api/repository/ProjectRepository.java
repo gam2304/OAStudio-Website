@@ -14,9 +14,14 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 
     boolean existsBySlug(String slug);
 
-    List<Project> findByStatus(ProjectStatus status);
+    boolean existsByCoverPublicId(String coverPublicId);
+
+    // Newest first; id breaks ties (rows backfilled with the same created_at)
+    List<Project> findByStatusOrderByCreatedAtDescIdDesc(ProjectStatus status);
 
     List<Project> findByCategoryId(Long categoryId);
+
+    long countByCategoryId(Long categoryId);
 
     List<Project> findByStatusAndCategoryId(
             ProjectStatus status,

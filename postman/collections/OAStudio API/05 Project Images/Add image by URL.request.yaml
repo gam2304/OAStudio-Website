@@ -1,0 +1,26 @@
+$kind: http-request
+url: "{{baseUrl}}/api/admin/projects/{{projectId}}/images"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "imageUrl": "https://res.cloudinary.com/demo/image/upload/sample.jpg",
+      "altText": "Facade {{runId}}",
+      "displayOrder": 1
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status is 201", () => pm.response.to.have.status(201));
+
+      const i = pm.response.json();
+      pm.test("Image saved", () => {
+          pm.expect(i.id).to.be.a("number");
+          pm.expect(i.displayOrder).to.eql(1);
+      });
+      pm.collectionVariables.set("imageId", i.id);
+    language: text/javascript
+order: 1000

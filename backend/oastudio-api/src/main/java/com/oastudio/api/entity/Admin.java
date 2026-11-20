@@ -3,6 +3,7 @@ package com.oastudio.api.entity;
 
 import com.oastudio.api.enums.UserRole;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
@@ -33,6 +34,7 @@ public class Admin {
     @Column(nullable = false, length = 30)
     private UserRole role = UserRole.ADMIN;
 
-    @Column(name = "created_at", insertable = false, updatable = false)
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 }

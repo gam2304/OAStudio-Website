@@ -1,0 +1,25 @@
+$kind: http-request
+url: "{{baseUrl}}/api/admin/admins"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "username": "",
+      "email": "not-an-email",
+      "password": "short"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status is 400", () => pm.response.to.have.status(400));
+      pm.test("Validation messages name the bad fields", () => {
+          const m = pm.response.json().messages;
+          pm.expect(m, "messages.username").to.have.property("username");
+          pm.expect(m, "messages.email").to.have.property("email");
+          pm.expect(m, "messages.password").to.have.property("password");
+      });
+    language: text/javascript
+order: 2000

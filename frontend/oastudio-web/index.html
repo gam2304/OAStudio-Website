@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Static on purpose: Facebook and other link previewers don't run JavaScript.
+         Keep in sync with src/content/site.ts (address, phone, hours, social links). -->
+    <title>OA Architecture &amp; Design – Oussama Attia | Architecte à M'saken, Sousse</title>
+    <meta
+      name="description"
+      content="Cabinet d'architecture d'Oussama Attia, architecte ENAU à M'saken (Sousse). Villas, résidences, bâtiments commerciaux et architecture intérieure dans le Sahel tunisien depuis 2019."
+    />
+
+    <!-- Open Graph: link previews on Facebook, WhatsApp, LinkedIn -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="OA Architecture &amp; Design" />
+    <meta property="og:locale" content="fr_TN" />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta property="og:title" content="OA Architecture &amp; Design – Oussama Attia, architecte à M'saken" />
+    <meta
+      property="og:description"
+      content="Villas, résidences, bâtiments commerciaux et architecture intérieure dans le Sahel tunisien. Cabinet fondé en 2019 par Oussama Attia, architecte ENAU."
+    />
+    <meta
+      property="og:image"
+      content="https://res.cloudinary.com/ggqgsc8v/image/upload/c_fill,w_1200,h_630,f_jpg,q_auto/v1794966558/oastudio/projects/duo-residences/3.jpg"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="DUO Residences au crépuscule, conçu par OA Architecture & Design" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Local business data for Google search and Maps -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        "name": "OA - Architecture & Design",
+        "alternateName": "OA Architecture",
+        "description": "Cabinet d'architecture et d'architecture intérieure à M'saken, Sousse, fondé en 2019 par Oussama Attia, architecte ENAU.",
+        "image": "https://res.cloudinary.com/ggqgsc8v/image/upload/c_fill,w_1200,h_630,f_jpg,q_auto/v1794966558/oastudio/projects/duo-residences/3.jpg",
+        "telephone": "+216 52 685 812",
+        "email": "oa.studio@outlook.com",
+        "foundingDate": "2019",
+        "founder": { "@type": "Person", "name": "Oussama Attia", "jobTitle": "Architecte ENAU" },
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "4éme Etage, Bureau n2, Immeuble el Baraka, Bd Dr Taieb Hachicha",
+          "addressLocality": "M'saken",
+          "postalCode": "4070",
+          "addressRegion": "Sousse",
+          "addressCountry": "TN"
+        },
+        "geo": { "@type": "GeoCoordinates", "latitude": 35.7339612, "longitude": 10.5757821 },
+        "hasMap": "https://maps.app.goo.gl/zawdf9XQVJfs4We49",
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "opens": "08:00",
+            "closes": "18:00"
+          },
+          { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "08:00", "closes": "13:00" }
+        ],
+        "areaServed": [
+          { "@type": "AdministrativeArea", "name": "Sousse" },
+          { "@type": "AdministrativeArea", "name": "Monastir" },
+          { "@type": "AdministrativeArea", "name": "Mahdia" },
+          { "@type": "AdministrativeArea", "name": "Nabeul" },
+          { "@type": "AdministrativeArea", "name": "Tunis" }
+        ],
+        "knowsAbout": ["Architecture", "Architecture intérieure", "Conception de villas"],
+        "sameAs": [
+          "https://www.facebook.com/Oussama.Attia.Architecte",
+          "https://www.instagram.com/oa.architecturedesign/"
+        ]
+      }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

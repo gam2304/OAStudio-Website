@@ -7,6 +7,8 @@ public record ContactMessageResponse(
         Long id,
         String senderName,
         String senderEmail,
+        String senderPhone,
+        String projectType,
         String subject,
         String message,
         String status,

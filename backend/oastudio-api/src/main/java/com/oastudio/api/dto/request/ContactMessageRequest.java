@@ -2,6 +2,7 @@ package com.oastudio.api.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 public record ContactMessageRequest(
@@ -14,6 +15,13 @@ public record ContactMessageRequest(
         @Email(message = "Invalid email address")
         @Size(max = 200)
         String senderEmail,
+
+        @Size(max = 30)
+        @Pattern(regexp = "^$|^[+0-9 ().-]{6,30}$", message = "Invalid phone number")
+        String senderPhone,
+
+        @Size(max = 100)
+        String projectType,
 
         @Size(max = 255)
         String subject,

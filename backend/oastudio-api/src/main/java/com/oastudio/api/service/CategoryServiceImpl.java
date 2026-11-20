@@ -5,6 +5,8 @@ import com.oastudio.api.dto.request.CategoryRequest;
 import com.oastudio.api.dto.response.CategoryResponse;
 import com.oastudio.api.entity.Category;
 import com.oastudio.api.repository.CategoryRepository;
+import com.oastudio.api.repository.ProjectRepository;
+import com.oastudio.api.exception.ResourceInUseException;
 import com.oastudio.api.exception.ResourceNotFoundException;
 import com.oastudio.api.exception.DuplicateResourceException;
 
@@ -21,6 +23,7 @@ import java.util.List;
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
+    private final ProjectRepository projectRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -116,6 +119,13 @@ public class CategoryServiceImpl implements CategoryService {
                                 "Category not found with ID: " + id
                         )
                 );
+
+        long projects = projectRepository.countByCategoryId(id);
+        if (projects > 0) {
+            throw new ResourceInUseException(
+                    "Category \"" + category.getCategoryName() + "\" is used by " + projects
+                            + (projects == 1 ? " project" : " projects") + ". Move or delete them first.");
+        }
 
         categoryRepository.delete(category);
     }

@@ -1,0 +1,13 @@
+$kind: http-request
+url: "{{baseUrl}}/api/public/projects"
+method: GET
+auth:
+  type: noauth
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status is 200", () => pm.response.to.have.status(200));
+      pm.test("Responds under 2s", () => pm.expect(pm.response.responseTime).to.be.below(2000));
+      pm.test("Returns an array", () => pm.expect(pm.response.json()).to.be.an("array"));
+    language: text/javascript
+order: 5000

@@ -1,0 +1,125 @@
+@import 'tailwindcss';
+
+/* Tokens from DESIGN.md ("Atelier Monolith") */
+@theme {
+  --color-void: #0a0a0a;
+  --color-surface: #141310;
+  --color-surface-low: #1c1c18;
+  --color-surface-high: #2b2a26;
+  --color-ink: #e6e2dc;
+  --color-paper: #f7f5f2;
+  --color-stone: #d9d5cf;
+  --color-bronze: #b28c5a;
+  --color-gold: #eabf89;
+  --color-error: #ffb4ab;
+
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+
+  --spacing-gutter: 32px;
+  --spacing-margin: 80px;
+  --spacing-margin-mobile: 24px;
+  --spacing-section: 160px;
+
+  --ease-calm: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-surface text-ink font-sans antialiased;
+  }
+  ::selection {
+    @apply bg-bronze text-void;
+  }
+  :focus-visible {
+    @apply outline outline-1 outline-offset-4 outline-bronze;
+  }
+  /* Tailwind v4 resets buttons to the default cursor */
+  button:not(:disabled),
+  [role='button']:not([aria-disabled='true']) {
+    cursor: pointer;
+  }
+  button:disabled {
+    cursor: not-allowed;
+  }
+  /* Chrome autofill paints a light, rounded box; keep inputs flat, sharp and on the dark surface */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--color-ink);
+    caret-color: var(--color-ink);
+    border-radius: 0;
+    box-shadow: 0 0 0 1000px var(--color-void) inset;
+    transition: background-color 9999s ease-out 0s;
+  }
+}
+
+/* Kept the old name to avoid touching 114 call sites; labels are sentence case now */
+@utility label-caps {
+  @apply font-sans text-[13px] font-medium leading-5;
+}
+@utility display-xl {
+  @apply font-display text-5xl leading-[1.08] tracking-[-0.01em] md:text-[84px] md:leading-[90px] md:tracking-[-0.02em];
+}
+@utility headline-lg {
+  @apply font-display text-[32px] leading-[38px] md:text-5xl md:leading-[56px];
+}
+@utility headline-md {
+  @apply font-display text-[32px] leading-10;
+}
+@utility body-lg {
+  @apply text-lg leading-8;
+}
+@utility page-x {
+  @apply px-margin-mobile md:px-margin;
+}
+
+/* Pressable controls: quick colour change on hover, slight scale-down on press */
+@utility press {
+  transition-property: color, background-color, border-color, opacity, transform;
+  transition-duration: 200ms;
+  transition-timing-function: ease-out;
+  &:active:not(:disabled) {
+    transform: scale(0.97);
+    transition-duration: 100ms;
+  }
+}
+
+/* Fades a freshly mounted element in (status messages) */
+@utility fade-in {
+  transition: opacity 200ms ease-out, transform 200ms ease-out;
+  @starting-style {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+/* First-visit language dialog: centred modal, so it scales from the centre */
+.lang-prompt[open] {
+  transition: opacity 250ms var(--ease-calm), transform 250ms var(--ease-calm);
+  @starting-style {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+.lang-prompt[open]::backdrop {
+  transition: opacity 250ms ease-out;
+  @starting-style {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .lang-prompt[open],
+  .fade-in {
+    @starting-style {
+      transform: none;
+    }
+  }
+}

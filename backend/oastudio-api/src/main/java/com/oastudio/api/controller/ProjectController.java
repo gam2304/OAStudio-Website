@@ -2,8 +2,10 @@
 package com.oastudio.api.controller;
 
 import com.oastudio.api.dto.request.ProjectRequest;
+import com.oastudio.api.dto.response.ProjectImageResponse;
 import com.oastudio.api.dto.response.ProjectResponse;
 import com.oastudio.api.enums.ProjectStatus;
+import com.oastudio.api.service.ProjectImageService;
 import com.oastudio.api.service.ProjectService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,7 @@ import java.util.List;
 public class ProjectController {
 
     private final ProjectService projectService;
+    private final ProjectImageService projectImageService;
 
     // PUBLIC ENDPOINTS
 
@@ -35,6 +38,15 @@ public class ProjectController {
             @PathVariable String slug) {
         return ResponseEntity.ok(
                 projectService.getPublishedProjectBySlug(slug));
+    }
+
+    // Gallery of a published project; the slug lookup rejects drafts and archived projects
+    @GetMapping("/api/public/projects/{slug}/images")
+    public ResponseEntity<List<ProjectImageResponse>> getPublishedProjectImages(
+            @PathVariable String slug) {
+        Long projectId = projectService.getPublishedProjectBySlug(slug).id();
+        return ResponseEntity.ok(
+                projectImageService.getProjectImages(projectId));
     }
 
     // ADMIN ENDPOINTS
@@ -105,6 +117,16 @@ public class ProjectController {
                 projectService.uploadProjectCover(projectId, file);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    // Use an existing gallery image as the cover
+    @PutMapping("/api/admin/projects/{projectId}/cover/{imageId}")
+    public ResponseEntity<ProjectResponse> setCoverFromGallery(
+            @PathVariable Long projectId,
+            @PathVariable Long imageId) {
+
+        return ResponseEntity.ok(
+                projectService.setCoverFromGallery(projectId, imageId));
     }
 
     @DeleteMapping("/api/admin/projects/{projectId}/cover")
